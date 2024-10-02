@@ -13,22 +13,32 @@
             justify-content: center;
             align-items: center;
             background-color: #d69397;
-        }
-        
+    }
+        .volante {
+            animation: steer 3s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+    }
+        @keyframes steer {
+        0% {
+         transform: rotate(0deg); }
+        25% {
+            transform: rotate(25deg); }
+        50% {
+            transform: rotate(0deg); }
+        75% {
+            transform: rotate(-25deg); }
+        100% {
+            transform: rotate(0deg); }
+    }
     </style>
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-
-        <!-- geral -->
-        <image class="elemento-animado" href="geral.svg" x="100" y="70"/>
-
         <!-- safari -->
-        <image class="elemento-animado" href="safari.svg" x="105" y="-300"/>
-
-        <!-- navigation -->
-        <image class="volante" href="navigation.svg" x="180" y="510"/>
-
+        <image class="safari" href="/svg/safari.svg" x="105" y="-350"/>
+        <!-- volante -->
+        <image class="volante" href="/svg/volante-2.svg" x="180" y="440"/>
     </svg>
 </body>
 </html>

@@ -13,24 +13,30 @@
             justify-content: center;
             align-items: center;
             background-color: #d69397;
-        }
-
-        /* estilos para futuras animações */
-        .elemento-animado {
-            transition: transform 0.3s ease;
-        }
-        
+    }
+        .exclam {
+            animation: pulsate 1.5s infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+    }
+        @keyframes pulsate {
+        0% {
+            transform: scale(1);}
+        50% {
+            transform: scale(1.2);}
+        100% {
+            transform: scale(1); }
+    }
     </style>
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-
         <!-- geral -->
-        <image class="elemento-animado" href="geral.svg" x="100" y="70"/>
-
+        <image class="geral" href="/svg/geral.svg" x="100" y="70"/>
         <!-- angry -->
-        <image class="elemento-animado" href="angry.svg" x="355" y="200"/>
-
+        <image class="angry" href="/svg/angry.svg" x="355" y="200"/>
+        <!-- exclam -->
+        <image class="exclam" href="/svg/exclam.svg" x="760" y="200"/>
     </svg>
 </body>
 </html>
