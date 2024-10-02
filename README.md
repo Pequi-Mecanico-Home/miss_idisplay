@@ -6,7 +6,8 @@ Visão Geral
 
 O objetivo deste projeto é criar uma interface intuitiva e responsiva que permita a interação eficiente entre o robô Miss Piggy e seus usuários. A interface será capaz de exibir informações em tempo real e responder a comandos de controle.
 Estrutura do Projeto
-Fase 1: Front-end
+
+##Fase 1: Front-end
 
 Nesta fase, a interface será desenvolvida com HTML e CSS, focando em:
 
@@ -14,7 +15,7 @@ Nesta fase, a interface será desenvolvida com HTML e CSS, focando em:
     Animações e interatividade: Uso de CSS para animações e transições suaves.
     Experiência do usuário (UX): Facilitar a navegação e a interação.
 
-Fase 2: Back-end
+##Fase 2: Back-end
 
 Nesta fase, será implementada a lógica de controle da interface, que inclui:
 
