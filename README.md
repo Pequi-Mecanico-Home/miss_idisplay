@@ -2,7 +2,8 @@ Miss Piggy Interface and Comms
 ======
 
 Este repositório contém o projeto Miss Piggy Interface que está inicialmente dividido em duas fases principais: a construção do front-end utilizando HTML/CSS ([@lavinia-rl](https://github.com/lavinia-rl)) e o desenvolvimento do back-end com Python ([@BatCarlos](https://github.com/BatCarlos)).
-Visão Geral
+
+# Visão Geral
 
 O objetivo deste projeto é criar uma interface intuitiva e responsiva que permita a interação eficiente entre o robô Miss Piggy e seus usuários. A interface será capaz de exibir informações em tempo real e responder a comandos de controle.
 
