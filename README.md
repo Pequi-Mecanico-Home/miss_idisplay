@@ -5,7 +5,8 @@ Este repositório contém o projeto Miss Piggy Interface, está inicialmente div
 Visão Geral
 
 O objetivo deste projeto é criar uma interface intuitiva e responsiva que permita a interação eficiente entre o robô Miss Piggy e seus usuários. A interface será capaz de exibir informações em tempo real e responder a comandos de controle.
-Estrutura do Projeto
+
+# Estrutura do Projeto
 
 ## Fase 1: Front-end
 
