@@ -14,22 +14,35 @@
             align-items: center;
             background-color: #d69397;
         }
-
-        /* estilos para futuras animações */
-        .elemento-animado {
-            transition: transform 0.3s ease;
-        }
+        .drop {
+            animation: drop 3s infinite ease-in-out;
+            transform-origin: top;
+            transform-box: fill-box;
+            position: absolute;
+            top: 0;
+}
+        @keyframes drop {
+        0% {
+            opacity: 0;
+            transform: scale(0); 
+            top: 0; }
+        40% {
+            opacity: 1;
+            transform: scale(1); 
+            top: 0; }
+        100% {
+            transform: translateY(800px); }
+}
     </style>
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-
         <!-- geral -->
-        <image class="elemento-animado" href="geral.svg" x="100" y="70"/>
-
+        <image class="geral" href="/miss_idisplay/svg/geral.svg" x="100" y="70"/>
         <!-- sad -->
-        <image class="elemento-animado" href="sad.svg" x="320" y="185"/>
-
+        <image class="sad" href="/miss_idisplay/svg/sad.svg" x="320" y="185"/>
+        <!-- drop -->
+         <image class="drop" href="/miss_idisplay/svg/drop.svg" x="588" y="390"/>
     </svg>
 </body>
 </html>

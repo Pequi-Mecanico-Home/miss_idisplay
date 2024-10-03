@@ -14,22 +14,25 @@
             align-items: center;
             background-color: #d69397;
         }
-
-        /* estilos para futuras animações */
-        .elemento-animado {
-            transition: transform 0.3s ease;
+        .brows {
+            animation: up 1.5s infinite alternate;;
+            transform-origin: top;
+            transform-box: fill-box;
         }
+            @keyframes up {
+            0% {
+                transform: translateY(0px); }
+            100% {
+                transform: translateY(50px); }
+}
     </style>
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-
-        <!-- geral -->
-        <image class="elemento-animado" href="geral.svg" x="100" y="70"/>
-
-        <!-- surprise -->
-        <image class="elemento-animado" href="surprise.svg" x="320" y="120"/>
-
+        <!-- geral-2 -->
+        <image class="geral" href="/miss_idisplay/svg/geral-2.svg" x="100" y="70"/>
+        <!-- brows -->
+        <image class="brows" href="/miss_idisplay/svg/brows.svg" x="320" y="120"/>
     </svg>
 </body>
 </html>

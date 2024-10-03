@@ -13,23 +13,30 @@
             justify-content: center;
             align-items: center;
             background-color: #d69397;
-        }
-
-        /* estilos para futuras animações */
-        .elemento-animado {
-            transition: transform 0.3s ease;
-        }
+    }
+        .fucin {
+            animation: pulsar 2.5s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+    }
+        @keyframes pulsar {
+        0%, 100% {
+            transform: scale(1);}
+        20%, 40% {
+            transform: scale(1.1);}
+        30%, 50% {
+            transform: scale(1);}
+    }
     </style>
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-
-        <!-- geral -->
-        <image class="elemento-animado" href="geral.svg" x="100" y="70"/>
-
+        <!-- fucin -->
+        <image class="fucin" href="/miss_idisplay/svg/fucin.svg" x="388" y="342"/>
+        <!-- idle -->
+        <image class="idle" href="/miss_idisplay/svg/idle.svg" x="100" y="70"/>
         <!-- normal -->
-        <image class="elemento-animado" href="normal.svg" x="320" y="160"/>
-
+        <image class="normal" href="/miss_idisplay/svg/normal.svg" x="320" y="160"/>
     </svg>
 </body>
 </html>
