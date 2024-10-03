@@ -1,4 +1,4 @@
-Miss Piggy Interface
+Miss Piggy Interface and Comms
 ======
 
 Este repositório contém o projeto Miss Piggy Interface, está inicialmente dividido em duas fases principais: a construção do front-end utilizando HTML/CSS (@lavinia-rl) e o desenvolvimento do back-end com Python (@BatCarlos).
