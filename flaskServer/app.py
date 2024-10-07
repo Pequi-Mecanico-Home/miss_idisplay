@@ -16,8 +16,8 @@ thread_lock = Lock()
 def index():
     return render_template('index.html', async_mode=socketio.async_mode)
 
-@app.route('/image')
-def get_image():
+@app.route('/html')
+def get_html():
     data = request.form.get('data')
     # Configure logging
     logging.basicConfig(level=logging.INFO)
@@ -25,15 +25,15 @@ def get_image():
 
     logger.info(f'Received data: {data}')
     if data:
-        image_path = f'/home/batman/interaction_miss/project2/static/{data}.gif' 
-        print("image path", image_path) # Update this path to your image
-        return send_file(image_path, mimetype='image/gif')
+        html_path = f'/static/html-css/{data}.html' 
+        print("image path", html_path) # Update this path to your image
+        return send_file(html_path, mimetype='text/html')
     return "No data provided", 501
     
-@app.route('/trigger_image_change')
-def trigger_image_change():
-    socketio.emit('change_image')
-    return "Image change event emitted"
+@app.route('/trigger_html_change')
+def trigger_html_change():
+    socketio.emit('change_html')
+    return "html change event emitted"
 
 @socketio.event
 def my_event(message):
@@ -46,17 +46,17 @@ def handle_message(data):
     print('received message: ' + str(data))
     emit('test_response', {'data': 'Test response sent'})
 
-@socketio.on('change_image')
-def change_image():
-    print('Image change requested')
-    emit('image_updated', {'data': 'Image has been updated'}, broadcast=True)
+@socketio.on('change_html')
+def change_html():
+    print('html change requested')
+    emit('html_updated', {'data': 'html has been updated'}, broadcast=True)
 
-@app.route('/post_trigger_image_change', methods=['POST'])
-def post_trigger_image_change():
+@app.route('/post_trigger_html_change', methods=['POST'])
+def post_trigger_html_change():
     data = request.form.get('data')
     if data:
-        socketio.emit('image_updated', {'data': data})
-        return "Image change event emitted with data"
+        socketio.emit('html_updated', {'data': data})
+        return "html change event emitted with data"
     return "No data provided", 400
 
 if __name__ == '__main__':
