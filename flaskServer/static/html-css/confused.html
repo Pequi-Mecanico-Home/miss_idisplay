@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>normal</title>
+    <title>confused</title>
     <style>
         body, html {
             margin: 0;
@@ -13,30 +13,30 @@
             justify-content: center;
             align-items: center;
             background-color: #d69397;
-    }
-        .fucin {
-            animation: pulsar 2.5s ease-in-out infinite;
+        }
+        .interr {
+            animation: pulsate 1.5s infinite;
             transform-origin: center center;
             transform-box: fill-box;
     }
-        @keyframes pulsar {
-        0%, 100% {
+        @keyframes pulsate {
+        0% {
             transform: scale(1);}
-        20%, 40% {
-            transform: scale(1.1);}
-        30%, 50% {
-            transform: scale(1);}
+        50% {
+            transform: scale(1.2);}
+        100% {
+            transform: scale(1); }
     }
     </style>
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-        <!-- fucin -->
-        <image class="fucin" href="/miss_idisplay/svg/fucin.svg" x="388" y="342"/>
-        <!-- idle -->
-        <image class="idle" href="/miss_idisplay/svg/idle.svg" x="100" y="70"/>
-        <!-- normal -->
-        <image class="normal" href="/miss_idisplay/svg/normal.svg" x="320" y="160"/>
+        <!-- geral -->
+        <image class="geral" href="/static/svg/geral.svg" x="100" y="70"/>
+        <!-- confused -->
+        <image class="confused" href="/static/svg/confused.svg" x="340" y="145"/>
+        <!-- interr -->
+         <image class="interr" href="/static/svg/interr.svg" x="740" y="200"/>
     </svg>
 </body>
 </html>

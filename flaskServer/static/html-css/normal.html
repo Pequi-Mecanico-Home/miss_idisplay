@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>angry</title>
+    <title>normal</title>
     <style>
         body, html {
             margin: 0;
@@ -14,29 +14,29 @@
             align-items: center;
             background-color: #d69397;
     }
-        .exclam {
-            animation: pulsate 1.5s infinite;
+        .fucin {
+            animation: pulsar 2.5s ease-in-out infinite;
             transform-origin: center center;
             transform-box: fill-box;
     }
-        @keyframes pulsate {
-        0% {
+        @keyframes pulsar {
+        0%, 100% {
             transform: scale(1);}
-        50% {
-            transform: scale(1.2);}
-        100% {
-            transform: scale(1); }
+        20%, 40% {
+            transform: scale(1.1);}
+        30%, 50% {
+            transform: scale(1);}
     }
     </style>
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-        <!-- geral -->
-        <image class="geral" href="/miss_idisplay/svg/geral.svg" x="100" y="70"/>
-        <!-- angry -->
-        <image class="angry" href="/miss_idisplay/svg/angry.svg" x="355" y="200"/>
-        <!-- exclam -->
-        <image class="exclam" href="/miss_idisplay/svg/exclam.svg" x="770" y="200"/>
+        <!-- fucin -->
+        <image class="fucin" href="/static/svg/fucin.svg" x="388" y="342"/>
+        <!-- idle -->
+        <image class="idle" href="/static/svg/idle.svg" x="100" y="70"/>
+        <!-- normal -->
+        <image class="normal" href="/static/svg/normal.svg" x="320" y="160"/>
     </svg>
 </body>
 </html>

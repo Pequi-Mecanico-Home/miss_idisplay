@@ -1,17 +1,39 @@
-<head></head>
+<!-- 
+
+This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically update an iframe's content. 
+
+- The <head> section includes:
+    - A title for the page.
+    - A script tag to include the Socket.IO library from a CDN.
+    - An inline script that:
+        - Waits for the DOM to be fully loaded before running.
+        - Establishes a WebSocket connection using Socket.IO.
+        - Listens for the 'html_updated' event from the server.
+        - Updates the iframe's source to the new HTML content received from the server.
+
+- The <body> section includes:
+    - An iframe that initially loads a static HTML file.
+    - Inline styles to ensure the iframe takes up the full viewport and is centered.
+-->
+<head>
     <title>Flask-SocketIO Image Update</title>
+<!-- We use a javascript to do the eventhandler along side with the socketIO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script type="text/javascript" charset="utf-8">
+// Using the event listener to ensure that the script only runs after the html be fully loaded and parsed
         document.addEventListener('DOMContentLoaded', (event) => {
+// Stablishing the connection through WebSocket with io()
             var socket = io();
-            socket.on('image_updated', function(msg) {
-                var img = document.getElementById('image');
-                img.src = '../static/' + msg.data + '.gif';  // Prevent caching
+// Listens to html_updated and receive a message object
+            socket.on('html_updated', function(msg) {
+// reloads the iframe with the updated HTML content
+                var iframe = document.getElementById('iframe');
+                iframe.src = '../static/html-css/' + msg.data + '.html';  
             });
         });
     </script>
 </head>
 <body style="margin: 0; height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
-    <img id="image" src="{{ url_for('static', filename='../static/missnormal.gif') }}" alt="GIF" style="max-width: 100%; max-height: 100%;">
+    <iframe id="iframe" src="../static/html-css/navigation.html" style="border: none; width: 100%; height: 100%;"></iframe>
 </body>
 </html>
