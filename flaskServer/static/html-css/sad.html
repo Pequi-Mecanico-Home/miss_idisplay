@@ -1,48 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- Define o viewport para adaptação em dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título da página -->
     <title>sad</title>
+    <!-- Estilos internos -->
     <style>
+        /* Configurações gerais para remover margens e preencher 100% da tela */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
+        /* Flexbox para centralizar o conteúdo */
             display: flex;
             justify-content: center;
             align-items: center;
+        /* Cor de fundo */
             background-color: #d69397;
         }
+        /* Animação da imagem com a classe "drop" */
         .drop {
-            animation: drop 3s infinite ease-in-out;
-            transform-origin: top;
-            transform-box: fill-box;
-            position: absolute;
-            top: 0;
-}
+            animation: drop 3s infinite ease-in-out; /* Animação de "cair" com duração de 3 segundos e repetição infinita */
+            transform-origin: top; /* Define o topo como o ponto de origem da transformação */
+            transform-box: fill-box; /* Aplica a transformação à caixa da imagem */
+            position: absolute; /* Define a posição da imagem como absoluta */
+            top: 0; /* Inicializa no topo da tela */
+        }
+        /* Definição dos keyframes para a animação de queda da imagem */
         @keyframes drop {
-        0% {
-            opacity: 0;
-            transform: scale(0); 
-            top: 0; }
-        40% {
-            opacity: 1;
-            transform: scale(1); 
-            top: 0; }
-        100% {
-            transform: translateY(800px); }
-}
+            0% {
+                opacity: 0; /* Início com opacidade zero (invisível) */
+                transform: scale(0); /* Escala inicial reduzida */
+                top: 0; /* Posição inicial no topo */}
+            40% {
+                opacity: 1; /* Aumenta a opacidade para 1 (visível) */
+                transform: scale(1); /* Volta à escala normal */
+                top: 0; /* Mantém a posição no topo */}
+            100% {
+                transform: translateY(800px); /* Move a imagem 800px para baixo (simulando uma queda) */}
+        }
     </style>
 </head>
 <body>
+    <!-- SVG com a área de visualização de 1024x600 -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-        <!-- geral -->
-        <image class="geral" href="/static/svg/geral.svg" x="100" y="70"/>
-        <!-- sad -->
-        <image class="sad" href="/static/svg/sad.svg" x="320" y="185"/>
-        <!-- drop -->
-         <image class="drop" href="/static/svg/drop.svg" x="588" y="390"/>
+    <!-- Imagem geral, posicionada em (100, 70) -->
+    <image class="geral" href="/static/svg/geral.svg" x="100" y="70"/>
+    <!-- Imagem "sad", posicionada em (320, 185) -->
+    <image class="sad" href="/static/svg/sad.svg" x="320" y="185"/>
+    <!-- Imagem "drop" com animação de queda, posicionada em (588, 390) -->
+    <image class="drop" href="/static/svg/drop.svg" x="588" y="390"/>
     </svg>
 </body>
 </html>

@@ -1,42 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- Define o viewport para adaptação em dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título da página -->
     <title>confused</title>
+    <!-- Estilos internos -->
     <style>
+        /* Configurações gerais para remover margens e preencher 100% da tela */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
+        /* Flexbox para centralizar o conteúdo */
             display: flex;
             justify-content: center;
             align-items: center;
+            /* Cor de fundo */
             background-color: #d69397;
         }
+        /* Animação da imagem com a classe "interr" */
         .interr {
-            animation: pulsate 1.5s infinite;
-            transform-origin: center center;
-            transform-box: fill-box;
-    }
+            animation: pulsate 1.5s infinite; /* Animação de pulsar repetida infinitamente */
+            transform-origin: center center; /* Define o centro como o ponto de transformação */
+            transform-box: fill-box; /* Aplica a transformação na caixa da imagem */
+        }
+        /* Definição dos keyframes para a animação de pulsar */
         @keyframes pulsate {
-        0% {
-            transform: scale(1);}
-        50% {
-            transform: scale(1.2);}
-        100% {
-            transform: scale(1); }
-    }
+            0% {
+                transform: scale(1); /* Tamanho inicial normal */}
+            50% {
+                transform: scale(1.2); /* Aumenta para 1.2x no meio da animação */}
+            100% {
+                transform: scale(1); /* Volta ao tamanho original no final */}
+        }
     </style>
 </head>
 <body>
+    <!-- SVG com a área de visualização de 1024x600 -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-        <!-- geral -->
-        <image class="geral" href="/static/svg/geral.svg" x="100" y="70"/>
-        <!-- confused -->
-        <image class="confused" href="/static/svg/confused.svg" x="340" y="145"/>
-        <!-- interr -->
-         <image class="interr" href="/static/svg/interr.svg" x="740" y="200"/>
+    <!-- Imagem geral, posicionada em (100, 70) -->
+    <image class="geral" href="/static/svg/geral.svg" x="100" y="70"/>
+    <!-- Imagem "confused", posicionada em (340, 145) -->
+    <image class="confused" href="/static/svg/confused.svg" x="340" y="145"/>
+    <!-- Imagem "interr" com animação de pulsação, posicionada em (740, 200) -->
+    <image class="interr" href="/static/svg/interr.svg" x="740" y="200"/>
     </svg>
 </body>
 </html>
