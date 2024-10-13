@@ -24,5 +24,5 @@
 
 - Exemple:
 
-`curl -F "file=@/miss_idisplay/subtitle" http://{your_ip}:8080/upload`
+`curl -F "file=@/path/to/subtitle" http://{your_ip}:8080/upload`
 
