@@ -1,7 +1,7 @@
 services:
   miss_idisplay:
     container_name: miss_idisplay
-    image: miss_idisplay:v1
+    image: miss_idisplay:v0
     command: bash
     ports:
       - "8181:8181"
