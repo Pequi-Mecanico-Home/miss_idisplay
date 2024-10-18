@@ -25,4 +25,4 @@ Nesta fase, será implementada a lógica de controle da interface, que inclui:
 - Controle de fluxo: Definição de como a interface reage a diferentes cenários.
 
 ## Instruções de como rodar o programa
-- Arquivo ReadME dentro de flaskServer
+- Arquivo ReadME dentro de [flaskServer](https://github.com/Pequi-Mecanico-Home/miss_idisplay/tree/feature/docker/flaskServer)
