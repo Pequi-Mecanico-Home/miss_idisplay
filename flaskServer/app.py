@@ -26,6 +26,7 @@ def on_image(msg):
     global frame
     
     cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding = "passthrough")
+    cv_image = cv2.cvtColor(cv_image,cv2.COLOR_BGR2RGB)
     frame = cv2.imencode(".jpg",cv_image)[1].tobytes()
     event.set()
 
