@@ -17,10 +17,10 @@ docker compose -f docker-compose.yaml run miss_idisplay
 ## How to run the Flask server and change the HTML pages inside the container?
 
 ### Running the Flask server:
-- open the file and run the python Flask code with
+- Inside the `flaskServer` folder and run the Flask python code with
 
 ```sh
-gunicorn --threads 5 --workers 1 --bind 0.0.0.0:8080 app:app`
+gunicorn --threads 5 --workers 1 --bind 0.0.0.0:8080 app:app
 ```
 ### Changing the HTML:
 - Open the terminal and with the following command you'll be able to change the html:
