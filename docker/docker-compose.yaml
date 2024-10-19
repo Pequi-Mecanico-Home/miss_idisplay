@@ -1,0 +1,11 @@
+services:
+  miss_idisplay:
+    container_name: miss_idisplay
+    image: miss_idisplay:v0
+    command: bash
+    ports:
+      - "8181:8181"
+    privileged: true 
+    network_mode: "host"
+    volumes: 
+      - ../:/idisplay_ws

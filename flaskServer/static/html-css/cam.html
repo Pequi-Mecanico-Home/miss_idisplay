@@ -18,7 +18,7 @@
             justify-content: center;
             align-items: center;
             background-color: #d69397;
-            background-image: url('/miss_idisplay/flaskServer/static/svg/cam.svg'); /* Caminho da imagem SVG */
+            background-image: url('/static/svg/cam.svg'); /* Caminho da imagem SVG */
             background-size: cover;
             background-position: center;
         }
@@ -30,8 +30,7 @@
             <!-- First Column, Video Stream and RQT Graph -->''
             <div class="col">
                 <!-- Video Stream -->
-                <h4 class="mt-5" style="text-align: center;">Website Stream of Webcam</h4>
-                <img src="{{ url_for('video_feed') }}" width="100%">
+                <img src="/video_feed" width="75%" style="position: absolute; top: 90px;left: 220px;">
             </div>
         </div>
     </div>

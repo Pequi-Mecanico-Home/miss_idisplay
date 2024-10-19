@@ -23,3 +23,6 @@ Nesta fase, será implementada a lógica de controle da interface, que inclui:
 - Comunicação com o robô: Integração de APIs para enviar e receber dados em tempo real;
 - Processamento de dados: Manipulação de informações recebidas dos sensores do robô;
 - Controle de fluxo: Definição de como a interface reage a diferentes cenários.
+
+## Instruções de como rodar o programa
+- Arquivo ReadME dentro de [flaskServer](https://github.com/Pequi-Mecanico-Home/miss_idisplay/tree/feature/docker/flaskServer)
