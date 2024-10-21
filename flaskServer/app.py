@@ -6,6 +6,7 @@ from cv_bridge import CvBridge
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
+from std_msgs.msg import String
 
 # Imports for threading operations
 import signal, sys
@@ -21,6 +22,19 @@ frame = None # Global variable frame (the holy image)
 
 bridge = CvBridge()
 event = Event()
+
+def on_text(msg):
+    # Callback function for text subscription
+    text_data = msg.data  # Assuming the message has a 'data' attribute containing the text
+    socketio.emit('subtitle', text_data)
+
+rclpy.init(args=None)
+node = rclpy.create_node('Show_subtitle_python')
+
+Thread(target=lambda: rclpy.spin(node)).start()  # Starting the Thread with a target in the node
+
+subscription = node.create_subscription(String, "/asr_output", on_text, 10)  # Creating the Subscribe node for text messages
+
 
 def on_image(msg):
     global frame

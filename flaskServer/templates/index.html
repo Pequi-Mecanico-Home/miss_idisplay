@@ -43,7 +43,7 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
                 if (index < words.length) {
                     subtitleDiv.innerText = words.slice(0, index + 1).join(' ');
                     index++;
-                    setTimeout(displayNextWord, 250); // Adjust the delay as needed (250ms in this example)
+                    setTimeout(displayNextWord, 200); // Adjust the delay as needed (250ms in this example)
                 } else {
                     setTimeout(() => {
                         subtitleDiv.innerText = '';
