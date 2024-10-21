@@ -59,6 +59,6 @@ curl -F "file=@/path/to/the/file" http://{rasp ip}:8080/upload
 
 - Example:
 ```sh
-curl -F "file=@/path/to/subtitle" http://0.0.0.0:8080/upload]
+curl -F "file=@/path/to/subtitle" http://0.0.0.0:8080/upload
 ```
 
