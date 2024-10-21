@@ -29,11 +29,12 @@ def on_text(msg):
     socketio.emit('subtitle', text_data)
 
 rclpy.init(args=None)
-node = rclpy.create_node('Show_subtitle_python')
 
-Thread(target=lambda: rclpy.spin(node)).start()  # Starting the Thread with a target in the node
+node_subtitle = rclpy.create_node('Show_subtitle_python')
 
-subscription = node.create_subscription(String, "/asr_output", on_text, 10)  # Creating the Subscribe node for text messages
+Thread(target=lambda: rclpy.spin(node_subtitle)).start()  # Starting the Thread with a target in the node
+
+subscription_subtitle = node_subtitle.create_subscription(String, "/asr_output", on_text, 10)  # Creating the Subscribe node for text messages
 
 
 def on_image(msg):
@@ -44,7 +45,6 @@ def on_image(msg):
     frame = cv2.imencode(".jpg",cv_image)[1].tobytes()
     event.set()
 
-rclpy.init(args=None)
 node = rclpy.create_node('Show_image_python')
 
 Thread(target=lambda:node).start() # Starting the Thread with a target in the node
