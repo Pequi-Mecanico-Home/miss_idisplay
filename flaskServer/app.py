@@ -23,18 +23,23 @@ frame = None # Global variable frame (the holy image)
 bridge = CvBridge()
 event = Event()
 
-def on_text(msg):
+def on_text_human(msg):
     # Callback function for text subscription
     text_data = msg.data  # Assuming the message has a 'data' attribute containing the text
-    socketio.emit('subtitle', text_data)
+    socketio.emit('subtitle_human', text_data)
 
+def on_text_robot(msg):
+    # Callback function for text subscription
+    text_data = msg.data  # Assuming the message has a 'data' attribute containing the text
+    socketio.emit('subtitle_robot', text_data)
 rclpy.init(args=None)
 
 node_subtitle = rclpy.create_node('Show_subtitle_python')
 
 Thread(target=lambda: rclpy.spin(node_subtitle)).start()  # Starting the Thread with a target in the node
 
-subscription_subtitle = node_subtitle.create_subscription(String, "/asr_output", on_text, 10)  # Creating the Subscribe node for text messages
+subscription_subtitle_human = node_subtitle.create_subscription(String, "/asr_output", on_text_human, 10)  # Creating the Subscribe node for text messages
+subscription_subtitle_robot = node_subtitle.create_subscription(String, '/text_to_speech', on_text_robot,10)
 
 
 def on_image(msg):
@@ -109,7 +114,7 @@ def upload():
     if file:
         content = file.read().decode('utf-8')
         for line in content.splitlines():
-            socketio.emit('subtitle', line)
+            socketio.emit('subtitle_robotgit ', line)
             socketio.sleep(1)  # Wait for 3 seconds before sending the next line
     return 'File uploaded successfully \n', 200
  
