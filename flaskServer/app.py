@@ -51,7 +51,7 @@ def on_text_robot(msg):
         words = text_data.split()
         
         if not hasattr(on_text_robot, 'word_queue'):
-            on_text_robot.word_queue = deque(maxlen=10)
+            on_text_robot.word_queue = deque(maxlen=8)
             on_text_robot.last_message_time = time.time()
         
         on_text_robot.word_queue.extend(words)

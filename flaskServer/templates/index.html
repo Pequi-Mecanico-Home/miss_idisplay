@@ -73,82 +73,12 @@ socket.on('subtitle_robot', (message) => {
        }, 10000);
     });
 
-        
-       
-    //     const messagesList = [];
-
-    // socket.on('subtitle_robot', (message) => {
-    //     const subtitleDiv = document.getElementById('subtitle_robot');
-    //     messagesList.push(message); // Add the received message to the list
-
-    //     const displayNextWord = () => {
-    //         const allMessages = messagesList.join(' '); // Concatenate all messages
-    //         const words = allMessages.split(' ');
-    //         let index = 0;
-
-    //         const displayNextWord = () => {
-    //             if (index < words.length) {
-    //                 const currentWords = words.slice(0, index + 1).join(' ');
-    //                 const lines = currentWords.split('\n');
-    //                 const lastLine = lines[lines.length - 1];
-    //                 const wordCount = lastLine.split(' ').length;
-    //                 if (wordCount % 10 === 0) {
-    //                     subtitleDiv.innerHTML = subtitleDiv.innerHTML.trim() + '<br>';
-    //                 }
-    //                 subtitleDiv.innerHTML = subtitleDiv.innerHTML.split('<br>').slice(-1).join('<br>'); // Keep only the last 5 lines
-
-    //                 subtitleDiv.innerHTML += words[index] + ' ';
-    //                 index++;
-    //                 setTimeout(displayNextWord, 800); // Adjust the delay as needed
-    //             }
-    //         };
-
-    //         displayNextWord();
-    //     };
-
-    //     displayNextWord();
-    // });
-
-        // socket.on('subtitle_robot', (message) => {
-        //     const subtitleDiv = document.getElementById('subtitle_robot');
-        //     const words = message.split(' ');
-        //     let index = 0;
-            
-
-        //     const displayNextWord = () => {
-        //         if (index < words.length) {
-        //             const currentWords = words.slice(0, index + 1).join(' ');
-        //             const lines = currentWords.split('\n');
-        //             const lastLine = lines[lines.length - 1];
-        //             const wordCount = lastLine.split('').length;
-        //             if (wordCount % 10 === 0) {
-        //                 subtitleDiv.innerHTML = subtitleDiv.innerHTML.trim() + '<br>';
-        //             }
-        //             subtitleDiv.innerHTML = subtitleDiv.innerHTML.split('<br>').slice(-2).join('<br>'); // Keep only the last 5 lines
-                   
-
-        //             subtitleDiv.innerHTML += words[index] + ' ';
-        //             index++;
-        //             setTimeout(displayNextWord, 800); // Adjust the delay as needed (200ms in this example)
-        //         } else {
-        //             setTimeout(() => {
-        //                 subtitleDiv.innerHTML = '\n';
-        //             }, 2500); // Clear the subtitle after 2 seconds
-        //         }
-        //     };
-            
-
-
-        //     displayNextWord();
-            
-    
-        // });
 
     </script>
 </head>
 <body style="margin: 0; height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
     <iframe id="iframe" src="../static/html-css/normal.html" style="border: none; width: 100%; height: 100%;"></iframe>
-    <div id="subtitle_human" style="position: fixed; top: 0; width: 100%; text-align: center; color: rgba(222, 211, 2, 0.801); padding: 10px; font-family: 'Times New Roman', Times, serif; font-size: 40px;font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;"></div>
-    <div id="subtitle_robot" style="position: fixed; bottom: 0; width: 100%; text-align: center; color: rgba(222, 211, 2, 0.801); padding: 10px; font-family: 'Times New Roman', Times, serif; font-size: 40px; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;"></div>
+    <div id="subtitle_human" style="position: fixed; top: 0; width: 100%; text-align: center; color: rgba(222, 211, 2, 0.801); padding: 10px; font-family: 'Ubuntu', Ubuntu, serif; font-size: 40px;font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;"></div>
+    <div id="subtitle_robot" style="position: fixed; bottom: 0; width: 100%; text-align: center; color: rgba(222, 211, 2, 0.801); padding: 10px; font-family: 'Ubuntu', Ubuntu, serif; font-size: 40px; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;"></div>
 </body>
 </html>
