@@ -2,10 +2,12 @@ services:
   miss_idisplay:
     container_name: miss_idisplay
     image: miss_idisplay:v0
-    command: bash
+    working_dir: /idisplay_ws/flaskServer
+    command: gunicorn --threads 5 --workers 1 --bind 0.0.0.0:8080 app:app
     ports:
       - "8181:8181"
     privileged: true 
     network_mode: "host"
+    restart: unless-stopped
     volumes: 
       - ../:/idisplay_ws
