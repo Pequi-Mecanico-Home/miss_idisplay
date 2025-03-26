@@ -1,47 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Define o viewport para adaptação em dispositivos móveis -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Título da página -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
     <title>confused</title>
-    <!-- Estilos internos -->
-    <style>
-        /* Configurações gerais para remover margens e preencher 100% da tela */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        /* Flexbox para centralizar o conteúdo */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* Cor de fundo */
-            background-color: #d69397;
-        }
-        /* Animação da imagem com a classe "interr" */
-        .interr {
-            animation: pulsate 1.5s infinite; /* Animação de pulsar repetida infinitamente */
-            transform-origin: center center; /* Define o centro como o ponto de transformação */
-            transform-box: fill-box; /* Aplica a transformação na caixa da imagem */
-        }
-        /* Definição dos keyframes para a animação de pulsar */
-        @keyframes pulsate {
-            0% {
-                transform: scale(1); /* Tamanho inicial normal */}
-            50% {
-                transform: scale(1.2); /* Aumenta para 1.2x no meio da animação */}
-            100% {
-                transform: scale(1); /* Volta ao tamanho original no final */}
-        }
-    </style>
 </head>
 <body>
-    <!-- SVG com a área de visualização de 1024x600 -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-    <image class="geral" href="/static/svg/geral.svg" x="110" y="40"/>
-    <image class="confused" href="/static/svg/confused.svg" x="350" y="115"/>
-    <image class="interr" href="/static/svg/interr.svg" x="750" y="170"/>
+        <image class="geral" href="/flaskServer/static/svg/geral.svg" x="110" y="40"/>
+        <image class="confused" href="/flaskServer/static/svg/confused.svg" x="350" y="115"/>
+        <image class="interr" href="/flaskServer/static/svg/interr.svg" x="750" y="170"/>
     </svg>
-</body>    <!-- Imagem geral, posicionada em (100, 50) -->
+</body>
+</html>

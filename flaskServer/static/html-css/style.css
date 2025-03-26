@@ -1,0 +1,130 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #d69397;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.exclam {
+    animation: pulsate1 1.5s infinite; 
+    transform-origin: center center;
+    transform-box: fill-box;
+}
+
+.interr {
+    animation: pulsate1 1.5s infinite;
+    transform-origin: center center;
+    transform-box: fill-box;
+}
+
+@keyframes pulsate1 {
+    0% {
+        transform: scale(1); }
+    50% {
+        transform: scale(1.2); }
+    100% {
+        transform: scale(1); }
+}
+
+.nose {
+    animation: pulsate2 2.5s ease-in-out infinite;
+    transform-origin: center center;
+    transform-box: fill-box;
+}
+
+@keyframes pulsate2 {
+    0%, 100% {
+        transform: scale(1); }
+    20%, 40% {
+        transform: scale(1.1); }
+    30%, 50% {
+        transform: scale(1); }
+}
+
+.arm {
+    animation: steer1 3s ease-in-out infinite;
+    transform-origin: center center;
+    transform-box: fill-box;
+}
+
+@keyframes steer1 {
+    0% {
+        transform: rotate(0deg); }
+    50% {
+        transform: rotate(-25deg); }
+    100% {
+        transform: rotate(0deg); }
+}
+
+.volante {
+    animation: steer2 3s ease-in-out infinite;
+    transform-origin: center center;
+    transform-box: fill-box;
+}
+
+@keyframes steer2 {
+    0% {
+        transform: rotate(0deg); }
+    25% {
+        transform: rotate(25deg); }
+    50% {
+        transform: rotate(0deg); }
+    75% {
+        transform: rotate(-25deg); }
+    100% {
+        transform: rotate(0deg); }
+}
+
+.teardrop {
+    animation: drop 3s infinite ease-in-out;
+    transform-origin: top;
+    transform-box: fill-box;
+    position: absolute;
+    top: 0;
+}
+
+@keyframes drop {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+        top: 0; }
+    40% {
+        opacity: 1;
+        transform: scale(1);
+        top: 0; }
+    100% {
+        transform: translateY(800px); }
+}
+
+.brows {
+    animation: up 1.5s infinite alternate;
+    transform-origin: top;
+    transform-box: fill-box;
+}
+
+@keyframes up {
+    0% {
+        transform: translateY(0px); }
+    100% {
+        transform: translateY(50px); }
+}
+
+.mouth {
+    animation: pulsate3 3s infinite;
+    transform-origin: center center;
+    transform-box: fill-box;
+}
+
+@keyframes pulsate3 {
+    0% {
+        transform: scale(1.2); /}
+    75% {
+        transform: scale(1); }
+    100% {
+        transform: scale(1.2); }
+}

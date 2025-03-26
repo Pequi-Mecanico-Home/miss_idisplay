@@ -1,60 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Define o viewport para adaptação em dispositivos móveis -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Título da página -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
     <title>surprise</title>
-    <!-- Estilos internos -->
-    <style>
-        /* Configurações gerais para remover margens e preencher 100% da tela */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        /* Flexbox para centralizar o conteúdo */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        /* Cor de fundo */
-            background-color: #d69397;
-        }
-        /* Animação da imagem com a classe "brows" */
-        .brows {
-            animation: up 1.5s infinite alternate; /* Animação de "subir" com duração de 1.5 segundos, alternando a direção e repetida infinitamente */
-            transform-origin: top; /* Define o topo como o ponto de origem da transformação */
-            transform-box: fill-box; /* Aplica a transformação à caixa da imagem */
-        }
-        /* Definição dos keyframes para a animação de subida da imagem */
-        @keyframes up {
-            0% {
-                transform: translateY(0px); /* Posição inicial, sem deslocamento vertical */}
-            100% {
-                transform: translateY(50px); /* Move a imagem 50px para baixo no final da animação */}
-        }
-        .bouca {
-            animation: pulsate 3s infinite; /* Animação de pulsar que se repete infinitamente a cada 1.5 segundos */
-            transform-origin: center center; /* Define o ponto de origem da transformação como o centro */
-            transform-box: fill-box; /* Aplica a transformação à caixa da imagem */
-        }
-        /* Definição dos keyframes para a animação de pulsar */
-        @keyframes pulsate {
-            0% {
-                transform: scale(1.2); /* No início, a escala é normal (1x) */}
-            75% {
-                transform: scale(1); /* No meio da animação, a escala aumenta para 1.2x */}
-            100% {
-                transform: scale(1.2); /* No final, volta à escala original */}
-        }
-    </style>
 </head>
 <body>
-    <!-- SVG com a área de visualização de 1024x600 -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-    <image class="geral" href="/static/svg/geral.svg" x="110" y="40"/>
-    <image class="brows" href="/static/svg/brows.svg" x="330" y="90"/>
-    <image class="bouca" href="/static/svg/bouca.svg" x="340" y="420"/>
+        <image class="geral" href="/flaskServer/static/svg/geral.svg" x="110" y="40"/>
+        <image class="brows" href="/flaskServer/static/svg/brows.svg" x="330" y="90"/>
+        <image class="mouth" href="/flaskServer/static/svg/mouth.svg" x="340" y="420"/>
     </svg>
 </body>
 </html>

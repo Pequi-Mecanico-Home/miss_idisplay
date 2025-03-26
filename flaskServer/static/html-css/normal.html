@@ -1,48 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Define o viewport para adaptação em dispositivos móveis -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Título da página -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
     <title>normal</title>
-    <!-- Estilos internos -->
-    <style>
-        /* Configurações gerais para remover margens e preencher 100% da tela */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        /* Flexbox para centralizar o conteúdo */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        /* Cor de fundo */
-            background-color: #d69397;
-        }
-        /* Animação da imagem com a classe "fucin" */
-        .fucin {
-            animation: pulsar 2.5s ease-in-out infinite; /* Animação de pulsar com duração de 2.5 segundos, repetida infinitamente */
-            transform-origin: center center; /* Define o centro como o ponto de transformação */
-            transform-box: fill-box; /* Aplica a transformação à caixa da imagem */
-        }
-        /* Definição dos keyframes para a animação de pulsar */
-        @keyframes pulsar {
-            0%, 100% {
-                transform: scale(1); /* Tamanho normal no início e fim da animação */}
-            20%, 40% {
-                transform: scale(1.1); /* Aumenta o tamanho para 1.1x no meio da animação */}
-            30%, 50% {
-                transform: scale(1); /* Retorna ao tamanho original em certos pontos */}
-        }
-    </style>
 </head>
 <body>
-    <!-- SVG com a área de visualização de 1024x600 -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-    <image class="fucin" href="/static/svg/fucin.svg" x="398" y="312"/>
-    <image class="idle" href="/static/svg/idle.svg" x="110" y="40"/>
-    <image class="normal" href="/static/svg/normal.svg" x="330" y="130"/>
+        <image class="nose" href="/flaskServer/static/svg/nose.svg" x="398" y="312"/>
+        <image class="idle" href="/flaskServer/static/svg/idle.svg" x="110" y="40"/>
+        <image class="normal" href="/flaskServer/static/svg/normal.svg" x="330" y="130"/>
     </svg>
 </body>
 </html>
