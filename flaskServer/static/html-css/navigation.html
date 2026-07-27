@@ -4,11 +4,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="style.css">
     <title>navigation</title>
+    <style>
+        /* Safari piggy subtle bounce (driving over terrain) */
+        .safari {
+            animation: drive-bounce 2s ease-in-out infinite;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+        @keyframes drive-bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-6px) rotate(-1deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-4px) rotate(1deg); }
+        }
+    </style>
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
-        <image class="safari" href="/flaskServer/static/svg/safari.svg" x="115" y="-380"/> 
-        <image class="volante" href="/flaskServer/static/svg/volante.svg" x="190" y="425"/>
+        <!-- Piggy safari + volante -->
+        <image class="safari" href="/static/svg/safari.svg" x="115" y="-380"/> 
+        <image class="volante" href="/static/svg/volante.svg" x="190" y="425"/>
     </svg>
 </body>
 </html>

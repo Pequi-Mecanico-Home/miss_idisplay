@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <title>listening</title>
+    <style>
+        .listen-body {
+            animation: lean-in 2.5s ease-in-out infinite;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+        @keyframes lean-in {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(6deg); }
+        }
+        .listen-eyes {
+            animation: lean-in 2.5s ease-in-out infinite;
+            transform-origin: 50% 100%;
+            transform-box: fill-box;
+        }
+        .listen-nose {
+            animation: lean-in 2.5s ease-in-out infinite;
+            transform-origin: 50% 100%;
+            transform-box: fill-box;
+        }
+        .sound-wave {
+            fill: none;
+            stroke: rgba(139, 92, 246, 0.6);
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+        .wave1 { animation: wave-pulse 1.8s ease-in-out infinite; transform-origin: center center; transform-box: fill-box; }
+        .wave2 { animation: wave-pulse 1.8s ease-in-out 0.3s infinite; transform-origin: center center; transform-box: fill-box; }
+        .wave3 { animation: wave-pulse 1.8s ease-in-out 0.6s infinite; transform-origin: center center; transform-box: fill-box; }
+        @keyframes wave-pulse {
+            0%, 100% { opacity: 0.2; transform: scale(0.85); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -10 1124 620" preserveAspectRatio="xMidYMid meet">
+        <image class="listen-nose" href="/static/svg/nose.svg" x="398" y="312"/>
+        <image class="listen-body" href="/static/svg/idle.svg" x="110" y="40"/>
+        <image class="listen-eyes" href="/static/svg/normal.svg" x="330" y="120"/>
+
+        <!-- Sound waves RIGHT side -->
+        <path class="sound-wave wave1" d="M 830 200 Q 870 260 830 320"/>
+        <path class="sound-wave wave2" d="M 860 180 Q 910 260 860 340"/>
+        <path class="sound-wave wave3" d="M 890 160 Q 950 260 890 360"/>
+
+        <!-- Sound waves LEFT side (mirrored) -->
+        <path class="sound-wave wave1" d="M 194 200 Q 154 260 194 320"/>
+        <path class="sound-wave wave2" d="M 164 180 Q 114 260 164 340"/>
+        <path class="sound-wave wave3" d="M 134 160 Q 74 260 134 360"/>
+    </svg>
+</body>
+</html>

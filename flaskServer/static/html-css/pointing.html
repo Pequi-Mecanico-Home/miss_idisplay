@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <title>pointing</title>
+    <style>
+        /* Pulse for the target locked */
+        .target-lock {
+            animation: lock-pulse 1.5s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+        }
+        @keyframes lock-pulse {
+            0%, 100% { opacity: 0.5; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* Large pointing arrow moving side to side */
+        .pointing-arrow {
+            animation: point-move 1.5s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+        }
+        @keyframes point-move {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(25px); }
+        }
+
+        /* Connecting line */
+        .connect-line {
+            stroke-dasharray: 12;
+            animation: dash-flow 1s linear infinite;
+        }
+        @keyframes dash-flow {
+            from { stroke-dashoffset: 24; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Face shifting slightly to the right */
+        .look-right {
+            animation: shift-right 2s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+        }
+        @keyframes shift-right {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(12px); }
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -10 1124 620" preserveAspectRatio="xMidYMid meet">
+        <image class="nose look-right" href="/static/svg/nose.svg" x="398" y="312"/>
+        <image class="idle" href="/static/svg/idle.svg" x="110" y="40"/>
+        <image class="normal look-right" href="/static/svg/normal.svg" x="330" y="120"/>
+
+        <!-- Connecting dotted line from piggy to the target -->
+        <line class="connect-line" x1="680" y1="300" x2="780" y2="300" stroke="#c8bcbc" stroke-width="4"/>
+
+        <!-- Big pointing arrows -->
+        <g class="pointing-arrow">
+            <polyline points="720,260 760,300 720,340" fill="none" stroke="#c8bcbc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="680,260 720,300 680,340" fill="none" stroke="rgba(200, 188, 188, 0.5)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- Target locked indicator (bounding box on the right side) -->
+        <g class="target-lock">
+            <!-- Bounding Box around the imaginary person -->
+            <rect x="790" y="150" width="180" height="300" fill="none" stroke="#c8bcbc" stroke-width="4" rx="15"/>
+            
+            <!-- Target corners to make it look like a sci-fi lock-on -->
+            <!-- Top Left -->
+            <polyline points="810,130 770,130 770,170" fill="none" stroke="#c8bcbc" stroke-width="6" stroke-linecap="round"/>
+            <!-- Top Right -->
+            <polyline points="950,130 990,130 990,170" fill="none" stroke="#c8bcbc" stroke-width="6" stroke-linecap="round"/>
+            <!-- Bottom Left -->
+            <polyline points="810,470 770,470 770,430" fill="none" stroke="#c8bcbc" stroke-width="6" stroke-linecap="round"/>
+            <!-- Bottom Right -->
+            <polyline points="950,470 990,470 990,430" fill="none" stroke="#c8bcbc" stroke-width="6" stroke-linecap="round"/>
+
+            <!-- Center crosshair/dot inside the box -->
+            <circle cx="880" cy="300" r="6" fill="#c8bcbc"/>
+            <line x1="860" y1="300" x2="900" y2="300" stroke="#c8bcbc" stroke-width="2"/>
+            <line x1="880" y1="280" x2="880" y2="320" stroke="#c8bcbc" stroke-width="2"/>
+        </g>
+    </svg>
+</body>
+</html>

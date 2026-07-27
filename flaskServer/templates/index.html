@@ -14,71 +14,247 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
 - The <body> section includes:
     - An iframe that initially loads a static HTML file.
     - Inline styles to ensure the iframe takes up the full viewport and is centered.
+    - A layout structure optimized for clear state indication and subtitles visibility.
 -->
+<!DOCTYPE html>
+<html>
 <head>
     <title>miss interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- We use a javascript to do the eventhandler along side with the socketIO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body, html {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        /* --- 1. MISS PIGGY DISPLAY (Full Screen) --- */
+        #iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0; 
+            left: 0;
+            z-index: 1; 
+        }
+
+        /* --- 2. STATE HEADER (Top Overlay) --- */
+        #state-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 64px;
+            background: var(--state-color, transparent);
+            box-shadow: 0 4px 24px var(--state-glow, transparent);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.8s ease, background-color 0.5s ease;
+            z-index: 100; 
+        }
+
+        #state-header.active { 
+            opacity: 1; 
+        }
+
+        .state-text-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        #state-label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 50px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .pulse-dot {
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: pulse-dot-anim 2.0s infinite ease-in-out;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes pulse-dot-anim {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.5); opacity: 0.4; }
+        }
+
+        /* --- 3. SUBTITLES FOOTER (Bottom Overlay) --- */
+        .footer-area {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 40px 40px 20px 40px;
+            z-index: 200;
+            pointer-events: none;
+        }
+
+        .subtitle-text {
+            width: 100%;
+            text-align: center;
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 36px; 
+            font-weight: bold;
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+            min-height: 45px; 
+        }
+
+        /* --- Operator Caption --- */
+        #subtitle_human { 
+            color: rgba(209, 213, 219, 0.95);
+            font-size: 35px;
+            margin-bottom: 5px;
+        }
+
+        #subtitle_human::before {
+            content: "Operator: ";
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 800;
+        }
+        
+        /* --- Miss Piggy Caption --- */
+        #subtitle_robot {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        #subtitle_robot::before {
+            content: "Miss Piggy: ";
+            color: rgba(34, 211, 238, 0.95);
+            font-weight: 800;
+        }
+
+        #subtitle_human:empty::before,
+        #subtitle_robot:empty::before {
+            content: none;
+        }
+
+    </style>
+
     <script type="text/javascript" charset="utf-8">
+        const STATE_CONFIG = {
+            listening:  { color: 'rgba(139, 92, 246, 0.82)', glow: 'rgba(139, 92, 246, 0.4)', label: 'LISTENING',  face: 'listening' },
+            thinking:   { color: 'rgba(59, 130, 246, 0.82)', glow: 'rgba(59, 130, 246, 0.4)', label: 'THINKING',   face: 'thinking' },
+            ready:      { color: 'rgba(34, 197, 94, 0.82)',  glow: 'rgba(34, 197, 94, 0.4)',  label: 'READY',      face: 'ready' },
+            talking:    { color: 'rgba(6, 182, 212, 0.82)',  glow: 'rgba(6, 182, 212, 0.4)',  label: 'TALKING',    face: 'talking' },
+            navigating: { color: 'rgba(245, 158, 11, 0.82)', glow: 'rgba(245, 158, 11, 0.4)', label: 'NAVIGATING', face: 'navigation' },
+            grabbing:   { color: 'rgba(249, 115, 22, 0.82)', glow: 'rgba(249, 115, 22, 0.4)', label: 'GRABBING',   face: 'grabbing' },
+            placing:    { color: 'rgba(236, 72, 153, 0.82)', glow: 'rgba(236, 72, 153, 0.4)', label: 'PLACING',    face: 'placing' },
+            help:       { color: 'rgba(234, 179, 8, 0.82)',  glow: 'rgba(234, 179, 8, 0.4)',  label: 'HELP',       face: 'help' },
+            error:      { color: 'rgba(239, 68, 68, 0.82)',  glow: 'rgba(239, 68, 68, 0.4)',  label: 'ERROR',      face: 'error' },
+            scanning:   { color: 'rgba(16, 185, 129, 0.82)', glow: 'rgba(16, 185, 129, 0.4)', label: 'SCANNING',   face: 'scanning' },
+            following:  { color: 'rgba(99, 102, 241, 0.82)', glow: 'rgba(99, 102, 241, 0.4)', label: 'FOLLOWING',  face: 'following' },
+            pointing:   { color: 'rgba(197, 197, 197, 0.82)', glow: 'rgba(197, 197, 197, 0.4)', label: 'POINTING',  face: 'pointing' }
+        };
+
+        function setStateBorder(state) {
+            const header = document.getElementById('state-header');
+            const iframe = document.getElementById('iframe');
+            const labelEl = document.getElementById('state-label');
+
+            if (!state || state === 'idle' || state === 'normal') {
+                header.classList.remove('active');
+                iframe.src = '../static/html-css/normal.html';
+                return;
+            }
+
+            const config = STATE_CONFIG[state];
+            if (!config) return;
+
+            header.style.setProperty('--state-color', config.color);
+            header.style.setProperty('--state-glow', config.glow);
+
+            labelEl.innerText = config.label;
+
+            header.classList.add('active');
+            iframe.src = '../static/html-css/' + config.face + '.html';
+        }
+
 // Using the event listener to ensure that the script only runs after the html be fully loaded and parsed
-        document.addEventListener('DOMContentLoaded', (event) => {
+        document.addEventListener('DOMContentLoaded', () => {
 // Stablishing the connection through WebSocket with io()
-            var socket = io();
+            const socket = io();
+
 // Listens to html_updated and receive a message object
             socket.on('html_updated', function(msg) {
 // reloads the iframe with the updated HTML content
-                var iframe = document.getElementById('iframe');
-                iframe.src = '../static/html-css/' + msg.data + '.html';  
+                document.getElementById('iframe').src = '../static/html-css/' + msg.data + '.html';
+            });
+
+            socket.on('state_changed', function(msg) {
+                setStateBorder(msg.state);
+            });
+
+            socket.on('subtitle_human', (message) => {
+                const subtitleDiv = document.getElementById('subtitle_human');
+                const words = message.split(' ');
+                let index = 0;
+                const displayNextWord = () => {
+                    if (index < words.length) {
+                        const currentWords = words.slice(0, index + 1).join(' ');
+                        const lines = currentWords.split('\n');
+                        const lastLine = lines[lines.length - 1];
+                        const wordCount = lastLine.split(' ').length;
+                        if (wordCount % 10 === 0) {
+                            subtitleDiv.innerHTML = subtitleDiv.innerHTML.trim() + '<br>';
+                        }
+                        subtitleDiv.innerHTML = subtitleDiv.innerHTML.split('<br>').slice(-2).join('<br>'); // Keep only the last 2 lines
+                        subtitleDiv.innerHTML += words[index] + ' ';
+                        index++;
+                        setTimeout(displayNextWord, 200); 
+                    } else {
+                        setTimeout(() => { subtitleDiv.innerHTML = ''; }, 4000); // Clear after 4s
+                    }
+                };
+                subtitleDiv.innerHTML = ''; // Reset before starting new typing effect
+                displayNextWord();
+            });
+
+            socket.on('subtitle_robot', (message) => {
+                const subtitleDiv = document.getElementById('subtitle_robot');
+                subtitleDiv.innerHTML = message;
+                setTimeout(() => { subtitleDiv.innerHTML = ''; }, 6000); // Hold robot text slightly longer
             });
         });
-
-        const socket = io();
-
-socket.on('subtitle_human', (message) => {
-    const subtitleDiv = document.getElementById('subtitle_human');
-    const words = message.split(' ');
-    let index = 0;
-
-    const displayNextWord = () => {
-        if (index < words.length) {
-            const currentWords = words.slice(0, index + 1).join(' ');
-            const lines = currentWords.split('\n');
-            const lastLine = lines[lines.length - 1];
-            const wordCount = lastLine.split(' ').length;
-            if (wordCount % 10 === 0) {
-                subtitleDiv.innerHTML = subtitleDiv.innerHTML.trim() + '<br>';
-            }
-            subtitleDiv.innerHTML = subtitleDiv.innerHTML.split('<br>').slice(-2).join('<br>'); // Keep only the last 5 lines
-           
-
-            subtitleDiv.innerHTML += words[index] + ' ';
-            index++;
-            setTimeout(displayNextWord, 200); // Adjust the delay as needed (200ms in this example)
-        } else {
-            setTimeout(() => {
-                subtitleDiv.innerHTML = '';
-            }, 2000); // Clear the subtitle after 2 seconds
-        }
-    };
-
-    displayNextWord();
-});
-
-socket.on('subtitle_robot', (message) => {
-        const subtitleDiv = document.getElementById('subtitle_robot');
-        subtitleDiv.innerHTML = message;
-
-       setTimeout(() => {
-           subtitleDiv.innerHTML = '';
-       }, 10000);
-    });
-
-
     </script>
 </head>
-<body style="margin: 0; height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
-    <iframe id="iframe" src="../static/html-css/normal.html" style="border: none; width: 100%; height: 100%;"></iframe>
-    <div id="subtitle_human" style="position: fixed; top: 0; width: 100%; text-align: center; color: rgba(222, 211, 2, 0.801); padding: 10px; font-family: 'Ubuntu', Ubuntu, serif; font-size: 40px;font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;"></div>
-    <div id="subtitle_robot" style="position: fixed; bottom: 0; width: 100%; text-align: center; color: rgba(222, 211, 2, 0.801); padding: 10px; font-family: 'Ubuntu', Ubuntu, serif; font-size: 40px; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;"></div>
+<body>
+    
+    <!-- 1. Center Area for Miss Piggy (Full Screen behind everything) -->
+    <iframe id="iframe" src="../static/html-css/normal.html"></iframe>
+
+    <!-- 2. Top Header for State Display -->
+    <div id="state-header">
+        <div class="state-text-container">
+            <div class="pulse-dot"></div>
+            <div id="state-label"></div>
+        </div>
+    </div>
+
+    <!-- 3. Bottom Footer for Subtitles -->
+    <div class="footer-area">
+        <div id="subtitle_human" class="subtitle-text"></div>
+        <div id="subtitle_robot" class="subtitle-text"></div>
+    </div>
+
 </body>
 </html>

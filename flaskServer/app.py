@@ -146,6 +146,14 @@ def video_feed():
     return Response(gen(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/post_trigger_state', methods=['POST'])
+def post_trigger_state():
+    state = request.form.get('state')
+    if state:
+        socketio.emit('state_changed', {'state': state})
+        return f"state changed to {state}"
+    return "No state provided", 400
+
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'file' not in request.files:
@@ -159,6 +167,20 @@ def upload():
             socketio.emit('subtitle_robotgit ', line)
             socketio.sleep(1)  # Wait for 3 seconds before sending the next line
     return 'File uploaded successfully \n', 200
+
+# Robot subtitle
+@app.route('/post_subtitle_robot', methods=['POST'])
+def post_subtitle_robot():
+    text = request.form.get('text', '')
+    socketio.emit('subtitle_robot', text)
+    return "Robot subtitle sent", 200
+
+# Human subtitle
+@app.route('/post_subtitle_human', methods=['POST'])
+def post_subtitle_human():
+    text = request.form.get('text', '')
+    socketio.emit('subtitle_human', text)
+    return "Human subtitle sent", 200
  
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, host='0.0.0.0', port=8080)

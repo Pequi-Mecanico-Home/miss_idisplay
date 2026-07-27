@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <title>scanning</title>
+    <style>
+        /* Corner brackets pulsing */
+        .scan-corner {
+            animation: corner-pulse 2s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+        }
+        .sc2 { animation-delay: 0.3s; }
+        .sc3 { animation-delay: 0.6s; }
+        .sc4 { animation-delay: 0.9s; }
+        @keyframes corner-pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Scan line sweeping top to bottom */
+        .scan-line {
+            animation: sweep 2.5s ease-in-out infinite;
+        }
+        @keyframes sweep {
+            0% { transform: translateY(-200px); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(350px); opacity: 0; }
+        }
+
+        /* Overall bracket group subtle scale */
+        .scan-frame {
+            animation: frame-breathe 3s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+        }
+        @keyframes frame-breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Small detection dots */
+        .detect-dot {
+            animation: dot-detect 1.8s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+        }
+        .dd2 { animation-delay: 0.4s; }
+        .dd3 { animation-delay: 0.8s; }
+        .dd4 { animation-delay: 1.2s; }
+        @keyframes dot-detect {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Status text */
+        .scan-text {
+            animation: scan-text-blink 1.5s ease-in-out infinite;
+        }
+        @keyframes scan-text-blink {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -10 1124 620" preserveAspectRatio="xMidYMid meet">
+        <image class="nose" href="/static/svg/nose.svg" x="398" y="312"/>
+        <image class="idle" href="/static/svg/idle.svg" x="110" y="40"/>
+        <image class="normal" href="/static/svg/normal.svg" x="330" y="120"/>
+
+        <!-- Scanner frame: corner brackets around the piggy face -->
+        <g class="scan-frame">
+            <!-- Top-left corner -->
+            <g class="scan-corner">
+                <line x1="310" y1="90" x2="310" y2="160" stroke="#00e5ff" stroke-width="5" stroke-linecap="round"/>
+                <line x1="310" y1="90" x2="380" y2="90" stroke="#00e5ff" stroke-width="5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Top-right corner -->
+            <g class="scan-corner sc2">
+                <line x1="710" y1="90" x2="710" y2="160" stroke="#00e5ff" stroke-width="5" stroke-linecap="round"/>
+                <line x1="710" y1="90" x2="640" y2="90" stroke="#00e5ff" stroke-width="5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Bottom-left corner -->
+            <g class="scan-corner sc3">
+                <line x1="310" y1="510" x2="310" y2="440" stroke="#00e5ff" stroke-width="5" stroke-linecap="round"/>
+                <line x1="310" y1="510" x2="380" y2="510" stroke="#00e5ff" stroke-width="5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Bottom-right corner -->
+            <g class="scan-corner sc4">
+                <line x1="710" y1="510" x2="710" y2="440" stroke="#00e5ff" stroke-width="5" stroke-linecap="round"/>
+                <line x1="710" y1="510" x2="640" y2="510" stroke="#00e5ff" stroke-width="5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Scan line (horizontal, sweeps vertically) -->
+            <line class="scan-line" x1="320" y1="300" x2="700" y2="300" stroke="rgba(0,229,255,0.4)" stroke-width="2"/>
+
+            <!-- Detection dots on key facial features -->
+            <circle class="detect-dot" cx="430" cy="210" r="5" fill="#00e5ff"/>
+            <circle class="detect-dot dd2" cx="590" cy="210" r="5" fill="#00e5ff"/>
+            <circle class="detect-dot dd3" cx="510" cy="360" r="5" fill="#00e5ff"/>
+            <circle class="detect-dot dd4" cx="510" cy="280" r="5" fill="#00e5ff"/>
+        </g>
+    </svg>
+</body>
+</html>

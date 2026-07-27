@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <title>talking</title>
+    <style>
+        .talk-mouth {
+            animation: talk 0.7s ease-in-out infinite;
+            transform-origin: center top;
+            transform-box: fill-box;
+        }
+        @keyframes talk {
+            0%, 100% { transform: scaleY(0.2); }
+            35%, 65% { transform: scaleY(1); }
+        }
+        .talk-tongue {
+            animation: talk-tongue 0.7s ease-in-out infinite;
+            transform-origin: center top;
+            transform-box: fill-box;
+        }
+        @keyframes talk-tongue {
+            0%, 100% { transform: scaleY(0); opacity: 0; }
+            35%, 65% { transform: scaleY(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -10 1124 620" preserveAspectRatio="xMidYMid meet">
+        
+        <image class="nose" href="/static/svg/nose.svg" x="398" y="312"/>
+        <image class="idle" href="/static/svg/idle.svg" x="110" y="40"/>
+        <image class="normal" href="/static/svg/normal.svg" x="330" y="120"/>
+
+        <!-- Normal mouth cover -->
+        <ellipse cx="380" cy="445" rx="38" ry="14" fill="#d69397" transform="rotate(26 380 445)" />
+        <ellipse cx="430" cy="467" rx="42" ry="19" fill="#d69397" transform="rotate(10 430 467)" />
+        <ellipse cx="478" cy="472" rx="28" ry="9" fill="#d69397" transform="rotate(0 478 472)" />
+
+        <!-- Talking mouth -->
+        <ellipse class="talk-mouth" cx="510" cy="500" rx="38" ry="22" fill="#3a2020"/>
+        <ellipse class="talk-tongue" cx="510" cy="515" rx="18" ry="10" fill="#c45a5a"/>
+        
+    </svg>
+</body>
+</html>

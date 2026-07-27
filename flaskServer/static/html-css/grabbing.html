@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <title>grabbing</title>
+    <style>
+        .grab-body, .grab-nose, .grab-eyes {
+            animation: concentrate 1.5s ease-in-out infinite alternate;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+        
+        @keyframes concentrate {
+            0% { transform: scale(1) translateY(0); }
+            100% { transform: scale(1.03) translateY(10px); }
+        }
+
+        /* Claw Arms Animation */
+        .claw-arm-left {
+            animation: reach-left 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes reach-left {
+            0% { transform: translateX(-20px) translateY(15px); }
+            100% { transform: translateX(15px) translateY(-5px); }
+        }
+
+        .claw-arm-right {
+            animation: reach-right 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes reach-right {
+            0% { transform: translateX(20px) translateY(15px); }
+            100% { transform: translateX(-15px) translateY(-5px); }
+        }
+
+        /* Pincers Animation */
+        .prong-top-l {
+            transform-origin: 150px 450px;
+            animation: pinch-top-l 1.5s ease-in-out infinite alternate;
+        }
+        .prong-bottom-l {
+            transform-origin: 150px 450px;
+            animation: pinch-bottom-l 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes pinch-top-l {
+            0% { transform: rotate(-20deg); }
+            100% { transform: rotate(10deg); }
+        }
+        @keyframes pinch-bottom-l {
+            0% { transform: rotate(20deg); }
+            100% { transform: rotate(-10deg); }
+        }
+
+        /* Right Side Pincers */
+        .prong-top-r {
+            transform-origin: 874px 450px;
+            animation: pinch-top-r 1.5s ease-in-out infinite alternate;
+        }
+        .prong-bottom-r {
+            transform-origin: 874px 450px;
+            animation: pinch-bottom-r 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes pinch-top-r {
+            0% { transform: rotate(20deg); }
+            100% { transform: rotate(-10deg); }
+        }
+        @keyframes pinch-bottom-r {
+            0% { transform: rotate(-20deg); }
+            100% { transform: rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -10 1124 620" preserveAspectRatio="xMidYMid meet">
+        
+        <!-- Porquinho (Focado) -->
+        <image class="grab-nose" href="/static/svg/nose.svg" x="398" y="312"/>
+        <image class="grab-body" href="/static/svg/idle.svg" x="110" y="40"/>
+        <image class="grab-eyes" href="/static/svg/normal.svg" x="330" y="120"/>
+
+        <!-- Left Claw -->
+        <g class="claw-arm-left">
+            <!-- Base Arm -->
+            <path d="M -20 580 L 150 450" stroke="#4a5568" stroke-width="38" stroke-linecap="round"/>
+            
+            <!-- Pincers -->
+            <path class="prong-top-l" d="M 150 450 C 180 390 230 390 260 420" stroke="#2d3748" stroke-width="22" stroke-linecap="round" fill="none"/>
+            <path class="prong-bottom-l" d="M 150 450 C 180 510 230 510 260 480" stroke="#2d3748" stroke-width="22" stroke-linecap="round" fill="none"/>
+            
+            <!-- Articulation -->
+            <circle cx="150" cy="450" r="26" fill="#f97316"/>
+            <circle cx="150" cy="450" r="16" fill="#1a202c"/>
+        </g>
+
+        <!-- Right Claw -->
+        <g class="claw-arm-right">
+            <!-- Base Arm -->
+            <path d="M 1044 580 L 874 450" stroke="#4a5568" stroke-width="38" stroke-linecap="round"/>
+            
+            <!-- Pincers -->
+            <path class="prong-top-r" d="M 874 450 C 844 390 794 390 764 420" stroke="#2d3748" stroke-width="22" stroke-linecap="round" fill="none"/>
+            <path class="prong-bottom-r" d="M 874 450 C 844 510 794 510 764 480" stroke="#2d3748" stroke-width="22" stroke-linecap="round" fill="none"/>
+            
+            <!-- Articulation -->
+            <circle cx="874" cy="450" r="26" fill="#f97316"/> 
+            <circle cx="874" cy="450" r="16" fill="#1a202c"/>
+        </g>
+
+    </svg>
+</body>
+</html>

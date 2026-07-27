@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <title>error</title>
+    <style>
+        .error-body {
+            animation: error-tremble 0.3s ease-in-out infinite;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+        .error-eyes {
+            animation: error-tremble 0.3s ease-in-out infinite;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+        .error-nose {
+            animation: error-tremble 0.3s ease-in-out infinite;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+        @keyframes error-tremble {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+
+        /* Red glow ring centered around piggy */
+        .error-glow {
+            animation: glow-pulse 2s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+        }
+        @keyframes glow-pulse {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.03); }
+        }
+
+        /* Scattered X marks */
+        .error-x {
+            animation: x-twinkle 2.8s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+        }
+        .ex2 { animation-delay: 0.5s; }
+        .ex3 { animation-delay: 1.0s; }
+        .ex4 { animation-delay: 1.5s; }
+        .ex5 { animation-delay: 2.0s; }
+        @keyframes x-twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.6) rotate(0deg); }
+            30% { opacity: 1; transform: scale(1.2) rotate(15deg); }
+            50% { opacity: 1; transform: scale(1.1) rotate(-10deg); }
+            70% { opacity: 0.7; transform: scale(1) rotate(5deg); }
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -10 1124 620" preserveAspectRatio="xMidYMid meet">
+
+        <!-- Red glow behind piggy (centered) -->
+        <ellipse class="error-glow" cx="510" cy="300" rx="280" ry="240" fill="none" stroke="rgba(239,68,68,0.5)" stroke-width="6"/>
+        <ellipse class="error-glow" cx="510" cy="300" rx="310" ry="270" fill="none" stroke="rgba(239,68,68,0.3)" stroke-width="4" style="animation-delay: 0.5s;"/>
+
+        <image class="error-nose" href="/static/svg/nose.svg" x="398" y="312"/>
+        <image class="error-body" href="/static/svg/idle.svg" x="110" y="40"/>
+        <image class="error-eyes" href="/static/svg/sad.svg" x="330" y="155"/>
+
+        <!-- Scattered X marks around the piggy -->
+        <g class="error-x">
+            <line x1="255" y1="90" x2="285" y2="120" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+            <line x1="285" y1="90" x2="255" y2="120" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+        </g>
+        <g class="error-x ex2">
+            <line x1="770" y1="100" x2="795" y2="125" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
+            <line x1="795" y1="100" x2="770" y2="125" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <g class="error-x ex3">
+            <line x1="820" y1="340" x2="850" y2="370" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+            <line x1="850" y1="340" x2="820" y2="370" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+        </g>
+        <g class="error-x ex4">
+            <line x1="180" y1="380" x2="205" y2="405" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
+            <line x1="205" y1="380" x2="180" y2="405" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <g class="error-x ex5">
+            <line x1="720" y1="470" x2="745" y2="495" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
+            <line x1="745" y1="470" x2="720" y2="495" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
+        </g>
+    </svg>
+</body>
+</html>

@@ -1,0 +1,13 @@
+services:
+  miss_idisplay:
+    container_name: miss_idisplay_dev
+    image: miss_idisplay:v0
+    working_dir: /idisplay_ws/flaskServer
+    command: python3 app.py
+    ports:
+      - "8181:8181"
+    privileged: true 
+    network_mode: "host"
+    restart: unless-stopped
+    volumes: 
+      - ../:/idisplay_ws

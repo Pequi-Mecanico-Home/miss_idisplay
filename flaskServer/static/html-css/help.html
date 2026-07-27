@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <title>help</title>
+    <style>
+        .help-body {
+            animation: help-shake 1.8s ease-in-out infinite;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+        .help-eyes {
+            animation: help-shake 1.8s ease-in-out infinite;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+        .help-nose {
+            animation: help-shake 1.8s ease-in-out infinite;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+        @keyframes help-shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+        }
+
+        /* Pulsing alert triangles scattered */
+        .alert-triangle {
+            animation: alert-pulse 2.8s ease-in-out infinite;
+            transform-origin: center center;
+            transform-box: fill-box;
+        }
+        .at2 { animation-delay: 0.5s; }
+        .at3 { animation-delay: 1.0s; }
+        .at4 { animation-delay: 1.5s; }
+        .at5 { animation-delay: 2.0s; }
+        @keyframes alert-pulse {
+            0%, 100% { opacity: 0.2; transform: scale(0.7) rotate(0deg); }
+            30% { opacity: 1; transform: scale(1.2) rotate(10deg); }
+            50% { opacity: 1; transform: scale(1.1) rotate(-5deg); }
+            70% { opacity: 0.7; transform: scale(1) rotate(3deg); }
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -10 1124 620" preserveAspectRatio="xMidYMid meet">
+        <image class="help-nose" href="/static/svg/nose.svg" x="398" y="312"/>
+        <image class="help-body" href="/static/svg/idle.svg" x="110" y="40"/>
+        <image class="help-eyes" href="/static/svg/sad.svg" x="330" y="155"/>
+
+        <!-- Scattered alert triangles (like sparkles in ready.html) -->
+        <g class="alert-triangle">
+            <polygon points="230,100 248,130 212,130" fill="none" stroke="#f97316" stroke-width="3.5" stroke-linejoin="round"/>
+            <text x="230" y="126" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#f97316">!</text>
+        </g>
+        <g class="alert-triangle at2">
+            <polygon points="750,80 765,105 735,105" fill="none" stroke="#f97316" stroke-width="3" stroke-linejoin="round"/>
+            <text x="750" y="102" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#f97316">!</text>
+        </g>
+        <g class="alert-triangle at3">
+            <polygon points="820,300 838,335 802,335" fill="none" stroke="#f97316" stroke-width="3.5" stroke-linejoin="round"/>
+            <text x="820" y="331" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#f97316">!</text>
+        </g>
+        <g class="alert-triangle at4">
+            <polygon points="160,380 175,405 145,405" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linejoin="round"/>
+            <text x="160" y="402" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#f97316">!</text>
+        </g>
+        <g class="alert-triangle at5">
+            <polygon points="700,460 715,485 685,485" fill="none" stroke="#f97316" stroke-width="3" stroke-linejoin="round"/>
+            <text x="700" y="482" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#f97316">!</text>
+        </g>
+    </svg>
+</body>
+</html>
