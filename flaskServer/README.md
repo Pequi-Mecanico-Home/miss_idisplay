@@ -56,6 +56,8 @@ You can interact with the interface in two ways: by triggering a **State** (whic
 ---
 
 #### 1. Testing Locally (on PC)
+Test video (currently on V2): https://www.youtube.com/watch?v=e-3FMok3maE
+
 To test the interface on your PC without ROS2 or Docker, you can run the local test server.
 1. Install requirements: `pip install flask flask-socketio`
 2. Run the local server: `python3 flaskServer/app_local.py`
