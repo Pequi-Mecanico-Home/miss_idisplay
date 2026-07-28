@@ -18,15 +18,21 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
 -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>miss interface</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
-<!-- We use a javascript to do the eventhandler along side with the socketIO -->
+    <!-- We use a javascript to do the eventhandler along side with the socketIO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        body, html {
+        body,
+        html {
             width: 100vw;
             height: 100vh;
             overflow: hidden;
@@ -39,9 +45,9 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
             width: 100%;
             height: 100%;
             position: absolute;
-            top: 0; 
+            top: 0;
             left: 0;
-            z-index: 1; 
+            z-index: 1;
         }
 
         /* --- 2. STATE HEADER (Top Overlay) --- */
@@ -58,11 +64,11 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
             align-items: center;
             opacity: 0;
             transition: opacity 0.8s ease, background-color 0.5s ease;
-            z-index: 100; 
+            z-index: 100;
         }
 
-        #state-header.active { 
-            opacity: 1; 
+        #state-header.active {
+            opacity: 1;
         }
 
         .state-text-container {
@@ -90,8 +96,17 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
         }
 
         @keyframes pulse-dot-anim {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(0.5); opacity: 0.4; }
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(0.5);
+                opacity: 0.4;
+            }
         }
 
         /* --- 3. SUBTITLES FOOTER (Bottom Overlay) --- */
@@ -113,17 +128,17 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
             width: 100%;
             text-align: center;
             font-family: 'Ubuntu', sans-serif;
-            font-size: 36px; 
+            font-size: 3.3vw;
             font-weight: bold;
-            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
-            min-height: 45px; 
+            text-shadow: -0.2vw -0.2vw 0 #000, 0.2vw -0.2vw 0 #000, -0.2vw 0.2vw 0 #000, 0.2vw 0.2vw 0 #000;
+            min-height: 4vw;
         }
 
         /* --- Operator Caption --- */
-        #subtitle_human { 
+        #subtitle_human {
             color: rgba(209, 213, 219, 0.95);
-            font-size: 35px;
-            margin-bottom: 5px;
+            font-size: 3.2vw;
+            margin-bottom: 0.5vw;
         }
 
         #subtitle_human::before {
@@ -131,7 +146,7 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
             color: rgba(255, 255, 255, 0.5);
             font-weight: 800;
         }
-        
+
         /* --- Miss Piggy Caption --- */
         #subtitle_robot {
             color: rgba(255, 255, 255, 0.95);
@@ -147,23 +162,22 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
         #subtitle_robot:empty::before {
             content: none;
         }
-
     </style>
 
     <script type="text/javascript" charset="utf-8">
         const STATE_CONFIG = {
-            listening:  { color: 'rgba(139, 92, 246, 0.82)', glow: 'rgba(139, 92, 246, 0.4)', label: 'LISTENING',  face: 'listening' },
-            thinking:   { color: 'rgba(59, 130, 246, 0.82)', glow: 'rgba(59, 130, 246, 0.4)', label: 'THINKING',   face: 'thinking' },
-            ready:      { color: 'rgba(34, 197, 94, 0.82)',  glow: 'rgba(34, 197, 94, 0.4)',  label: 'READY',      face: 'ready' },
-            talking:    { color: 'rgba(6, 182, 212, 0.82)',  glow: 'rgba(6, 182, 212, 0.4)',  label: 'TALKING',    face: 'talking' },
+            listening: { color: 'rgba(139, 92, 246, 0.82)', glow: 'rgba(139, 92, 246, 0.4)', label: 'LISTENING', face: 'listening' },
+            thinking: { color: 'rgba(59, 130, 246, 0.82)', glow: 'rgba(59, 130, 246, 0.4)', label: 'THINKING', face: 'thinking' },
+            ready: { color: 'rgba(34, 197, 94, 0.82)', glow: 'rgba(34, 197, 94, 0.4)', label: 'READY', face: 'ready' },
+            talking: { color: 'rgba(6, 182, 212, 0.82)', glow: 'rgba(6, 182, 212, 0.4)', label: 'TALKING', face: 'talking' },
             navigating: { color: 'rgba(245, 158, 11, 0.82)', glow: 'rgba(245, 158, 11, 0.4)', label: 'NAVIGATING', face: 'navigation' },
-            grabbing:   { color: 'rgba(249, 115, 22, 0.82)', glow: 'rgba(249, 115, 22, 0.4)', label: 'GRABBING',   face: 'grabbing' },
-            placing:    { color: 'rgba(236, 72, 153, 0.82)', glow: 'rgba(236, 72, 153, 0.4)', label: 'PLACING',    face: 'placing' },
-            help:       { color: 'rgba(234, 179, 8, 0.82)',  glow: 'rgba(234, 179, 8, 0.4)',  label: 'HELP',       face: 'help' },
-            error:      { color: 'rgba(239, 68, 68, 0.82)',  glow: 'rgba(239, 68, 68, 0.4)',  label: 'ERROR',      face: 'error' },
-            scanning:   { color: 'rgba(16, 185, 129, 0.82)', glow: 'rgba(16, 185, 129, 0.4)', label: 'SCANNING',   face: 'scanning' },
-            following:  { color: 'rgba(99, 102, 241, 0.82)', glow: 'rgba(99, 102, 241, 0.4)', label: 'FOLLOWING',  face: 'following' },
-            pointing:   { color: 'rgba(197, 197, 197, 0.82)', glow: 'rgba(197, 197, 197, 0.4)', label: 'POINTING',  face: 'pointing' }
+            grabbing: { color: 'rgba(249, 115, 22, 0.82)', glow: 'rgba(249, 115, 22, 0.4)', label: 'GRABBING', face: 'grabbing' },
+            placing: { color: 'rgba(236, 72, 153, 0.82)', glow: 'rgba(236, 72, 153, 0.4)', label: 'PLACING', face: 'placing' },
+            help: { color: 'rgba(234, 179, 8, 0.82)', glow: 'rgba(234, 179, 8, 0.4)', label: 'HELP', face: 'help' },
+            error: { color: 'rgba(239, 68, 68, 0.82)', glow: 'rgba(239, 68, 68, 0.4)', label: 'ERROR', face: 'error' },
+            scanning: { color: 'rgba(16, 185, 129, 0.82)', glow: 'rgba(16, 185, 129, 0.4)', label: 'SCANNING', face: 'scanning' },
+            following: { color: 'rgba(99, 102, 241, 0.82)', glow: 'rgba(99, 102, 241, 0.4)', label: 'FOLLOWING', face: 'following' },
+            pointing: { color: 'rgba(197, 197, 197, 0.82)', glow: 'rgba(197, 197, 197, 0.4)', label: 'POINTING', face: 'pointing' }
         };
 
         function setStateBorder(state) {
@@ -189,25 +203,41 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
             iframe.src = '../static/html-css/' + config.face + '.html';
         }
 
-// Using the event listener to ensure that the script only runs after the html be fully loaded and parsed
+        // Using the event listener to ensure that the script only runs after the html be fully loaded and parsed
         document.addEventListener('DOMContentLoaded', () => {
-// Stablishing the connection through WebSocket with io()
+            // Stablishing the connection through WebSocket with io()
             const socket = io();
 
-// Listens to html_updated and receive a message object
-            socket.on('html_updated', function(msg) {
-// reloads the iframe with the updated HTML content
+            // Listens to html_updated and receive a message object
+            socket.on('html_updated', function (msg) {
+                // reloads the iframe with the updated HTML content
                 document.getElementById('iframe').src = '../static/html-css/' + msg.data + '.html';
             });
 
-            socket.on('state_changed', function(msg) {
+            socket.on('state_changed', function (msg) {
                 setStateBorder(msg.state);
             });
 
-            socket.on('subtitle_human', (message) => {
-                const subtitleDiv = document.getElementById('subtitle_human');
+            // --- Subtitle Queue System ---
+            // Messages are queued and played one at a time per channel.
+            const humanQueue = [];
+            const robotQueue = [];
+            let humanBusy = false;
+            let robotBusy = false;
+
+            function processQueue(queue, busyFlag, subtitleDiv, holdTime) {
+                if (queue.length === 0) {
+                    // Set the busy flag to false on the correct variable
+                    if (subtitleDiv.id === 'subtitle_human') humanBusy = false;
+                    else robotBusy = false;
+                    return;
+                }
+
+                const message = queue.shift();
                 const words = message.split(' ');
                 let index = 0;
+                subtitleDiv.innerHTML = '';
+
                 const displayNextWord = () => {
                     if (index < words.length) {
                         const currentWords = words.slice(0, index + 1).join(' ');
@@ -217,28 +247,44 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
                         if (wordCount % 10 === 0) {
                             subtitleDiv.innerHTML = subtitleDiv.innerHTML.trim() + '<br>';
                         }
-                        subtitleDiv.innerHTML = subtitleDiv.innerHTML.split('<br>').slice(-2).join('<br>'); // Keep only the last 2 lines
+                        subtitleDiv.innerHTML = subtitleDiv.innerHTML.split('<br>').slice(-2).join('<br>');
                         subtitleDiv.innerHTML += words[index] + ' ';
                         index++;
-                        setTimeout(displayNextWord, 200); 
+                        setTimeout(displayNextWord, 200);
                     } else {
-                        setTimeout(() => { subtitleDiv.innerHTML = ''; }, 4000); // Clear after 4s
+                        // Hold the text visible, then clear and process next in queue
+                        setTimeout(() => {
+                            subtitleDiv.innerHTML = '';
+                            processQueue(queue, busyFlag, subtitleDiv, holdTime);
+                        }, holdTime);
                     }
                 };
-                subtitleDiv.innerHTML = ''; // Reset before starting new typing effect
                 displayNextWord();
+            }
+
+            socket.on('subtitle_human', (message) => {
+                const subtitleDiv = document.getElementById('subtitle_human');
+                humanQueue.push(message);
+                if (!humanBusy) {
+                    humanBusy = true;
+                    processQueue(humanQueue, humanBusy, subtitleDiv, 4000);
+                }
             });
 
             socket.on('subtitle_robot', (message) => {
                 const subtitleDiv = document.getElementById('subtitle_robot');
-                subtitleDiv.innerHTML = message;
-                setTimeout(() => { subtitleDiv.innerHTML = ''; }, 6000); // Hold robot text slightly longer
+                robotQueue.push(message);
+                if (!robotBusy) {
+                    robotBusy = true;
+                    processQueue(robotQueue, robotBusy, subtitleDiv, 6000);
+                }
             });
         });
     </script>
 </head>
+
 <body>
-    
+
     <!-- 1. Center Area for Miss Piggy (Full Screen behind everything) -->
     <iframe id="iframe" src="../static/html-css/normal.html"></iframe>
 
@@ -257,4 +303,5 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
     </div>
 
 </body>
+
 </html>
