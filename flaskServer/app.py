@@ -141,7 +141,7 @@ def upload():
     if file:
         content = file.read().decode('utf-8')
         for line in content.splitlines():
-            socketio.emit('subtitle_robotgit ', line)
+            socketio.emit('subtitle_robot', line)
             socketio.sleep(1)  # Wait for 3 seconds before sending the next line
     return 'File uploaded successfully \n', 200
 
