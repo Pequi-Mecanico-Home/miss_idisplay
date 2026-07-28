@@ -46,32 +46,9 @@ def on_text_human(msg):
 #     socketio.emit('subtitle_robot', concatenated_text)
     
 def on_text_robot(msg):
-        global concatenated_text
-        text_data = msg.data
-        words = text_data.split()
-        
-        if not hasattr(on_text_robot, 'word_queue'):
-            on_text_robot.word_queue = deque(maxlen=8)
-            on_text_robot.last_message_time = time.time()
-        
-        on_text_robot.word_queue.extend(words)
-        on_text_robot.last_message_time = time.time()
-        
-        concatenated_text = ' '.join(on_text_robot.word_queue)
-        socketio.emit('subtitle_robot', concatenated_text)
-        
-        # Clear the queue after 3 seconds without messages
-        def clear_queue():
-            while True:
-                if time.time() - on_text_robot.last_message_time > 3:
-                    on_text_robot.word_queue.clear()
-                time.sleep(1)
-        
-        if not hasattr(on_text_robot, 'clear_thread'):
-            on_text_robot.clear_thread = Thread(target=clear_queue)
-            on_text_robot.clear_thread.daemon = True
-            on_text_robot.clear_thread.start()
-
+    # Callback function for Miss Piggy text subscription
+    text_data = msg.data  # Assuming the message has a 'data' attribute containing the text
+    socketio.emit('subtitle_robot', text_data)
 
 
 rclpy.init(args=None)
