@@ -11,13 +11,16 @@ from std_msgs.msg import String
 # Imports for threading operations
 import signal, sys
 from threading import Thread, Event, Lock
+from threading import Thread, Event, Lock
+import urllib.request
+import urllib.parse
 
 from flask import Flask, render_template, request, Response
 from flask_socketio import SocketIO
 
 from collections import deque
 import time
-async_mode = None
+async_mode = 'threading'
 
 frame = None # Global variable frame (the holy image)
 
@@ -30,7 +33,11 @@ concatenated_text = ""
 def on_text_human(msg):
     # Callback function for text subscription
     text_data = msg.data  # Assuming the message has a 'data' attribute containing the text
-    socketio.emit('subtitle_human', text_data)
+    try:
+        data = urllib.parse.urlencode({'text': text_data}).encode()
+        urllib.request.urlopen('http://127.0.0.1:8080/post_subtitle_human', data=data, timeout=1)
+    except Exception as e:
+        print(f"Error posting human text: {e}")
 
 # def on_text_robot(msg):
 #     global concatenated_text
@@ -46,9 +53,37 @@ def on_text_human(msg):
 #     socketio.emit('subtitle_robot', concatenated_text)
     
 def on_text_robot(msg):
-    # Callback function for Miss Piggy text subscription
-    text_data = msg.data  # Assuming the message has a 'data' attribute containing the text
-    socketio.emit('subtitle_robot', text_data)
+    global concatenated_text
+    print(f"CALLBACK FIRED: {msg.data}", flush=True)
+    text_data = msg.data
+    words = text_data.split()
+    
+    if not hasattr(on_text_robot, 'word_queue'):
+        on_text_robot.word_queue = deque(maxlen=8)
+        on_text_robot.last_message_time = time.time()
+    
+    on_text_robot.word_queue.extend(words)
+    on_text_robot.last_message_time = time.time()
+    
+    concatenated_text = ' '.join(on_text_robot.word_queue)
+    try:
+        data = urllib.parse.urlencode({'text': concatenated_text}).encode()
+        urllib.request.urlopen('http://127.0.0.1:8080/post_subtitle_robot', data=data, timeout=1)
+    except Exception as e:
+        print(f"Error posting robot text: {e}")
+    
+    # Clear the queue after 3 seconds without messages
+    def clear_queue():
+        while True:
+            if time.time() - on_text_robot.last_message_time > 3:
+                on_text_robot.word_queue.clear()
+            time.sleep(1)
+    
+    if not hasattr(on_text_robot, 'clear_thread'):
+        on_text_robot.clear_thread = Thread(target=clear_queue)
+        on_text_robot.clear_thread.daemon = True
+        on_text_robot.clear_thread.start()
+
 
 
 rclpy.init(args=None)
@@ -160,4 +195,4 @@ def post_subtitle_human():
     return "Human subtitle sent", 200
  
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8080)
+    socketio.run(app, host='0.0.0.0', port=8080, allow_unsafe_werkzeug=True)

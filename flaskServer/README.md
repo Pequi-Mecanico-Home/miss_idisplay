@@ -34,6 +34,28 @@ docker compose -f docker/docker-compose.local.yaml down
 
 ```
 
+* To see the container logs in real time:
+
+```sh
+# Production container:
+docker logs -f miss_idisplay
+
+# Local development container:
+docker logs -f miss_idisplay_dev
+
+```
+
+* To restart the container (useful after a `git pull` with changes to the files):
+
+```sh
+# Restart production:
+docker compose -f docker/docker-compose.yaml restart
+
+# Restart local development:
+docker compose -f docker/docker-compose.local.yaml restart
+
+```
+
 ---
 
 ## How to run the Flask server and change the HTML pages inside the container?
@@ -110,23 +132,106 @@ curl -X POST http://localhost:8050/post_trigger_html_change -d "data=following"
 
 ---
 
-#### 2. Testing on the Robot (Production)
-When running the real `app.py` server (via Docker) on the robot or a ROS2 environment, the server runs on port `8080`. 
-*(Note: Replace `0.0.0.0` with the Raspberry Pi's IP if testing from another machine).*
+#### 2. Testing with Docker Compose Local (on PC)
 
-**Triggering States:**
+To test the interface inside a Docker container on your PC, without the robot hardware. It runs `app.py` on port `8080`.
+1. Build the Docker image (only needed once): `./docker/build.sh`
+2. Start the container: `docker compose -f docker/docker-compose.local.yaml up`
+3. Open your browser at `http://localhost:8080`
+
+_Note:_ Stop the container: `docker compose -f docker/docker-compose.local.yaml down`
+
+Open a new terminal and use these `curl` commands to test the states and HTML screens:
+
 ```sh
+# Normal/Idle (Removes borders)
+curl -X POST http://localhost:8080/post_trigger_state -d "state=idle"
+
+# Emotions & Interactions
+curl -X POST http://localhost:8080/post_trigger_state -d "state=listening"
+curl -X POST http://localhost:8080/post_trigger_state -d "state=thinking"
+curl -X POST http://localhost:8080/post_trigger_state -d "state=talking"
+curl -X POST http://localhost:8080/post_trigger_state -d "state=ready"
+
+# Actions
+curl -X POST http://localhost:8080/post_trigger_state -d "state=grabbing"
+curl -X POST http://localhost:8080/post_trigger_state -d "state=placing"
+
+# Task "Personal Recognition"
+curl -X POST http://localhost:8080/post_trigger_state -d "state=scanning"
+curl -X POST http://localhost:8080/post_trigger_state -d "state=pointing"
+
+# Task "Navigation and Follow Me"
+curl -X POST http://localhost:8080/post_trigger_state -d "state=navigating"
+curl -X POST http://localhost:8080/post_trigger_state -d "state=following"
+
+# System Alerts
+curl -X POST http://localhost:8080/post_trigger_state -d "state=help"
+curl -X POST http://localhost:8080/post_trigger_state -d "state=error"
+```
+
+To test **direct HTML loading** (without the borders/state UI):
+```sh
+# Idle then others
+curl -X POST http://localhost:8080/post_trigger_html_change -d "data=normal"
+curl -X POST http://localhost:8080/post_trigger_html_change -d "data=following"
+# You can replace "data=..." with any HTML filename (without .html)
+```
+
+To test **subtitles**, you can publish to the ROS2 topics directly inside the container (publishing 3 times to ensure delivery):
+
+```sh
+# Publish text as the human operator (ASR output)
+docker exec miss_idisplay_dev bash -c "source /opt/ros/humble/setup.bash && ros2 topic pub -t 3 /asr_output std_msgs/String \"data: 'Hey Piggy, go to the kitchen'\""
+
+# Publish text as the robot speaking (TTS)
+docker exec miss_idisplay_dev bash -c "source /opt/ros/humble/setup.bash && ros2 topic pub -t 3 /text_to_speech std_msgs/String \"data: 'Going to the kitchen now'\""
+```
+
+---
+
+#### 3. Testing on the Robot (Production)
+
+To deploy on the robot (Raspberry Pi), the server runs with `gunicorn` on port `8080` with ROS2 active.
+1. Build the Docker image (only needed once): `./docker/build.sh`
+2. Start the container: `docker compose -f docker/docker-compose.yaml up -d`
+3. Open your browser at `http://localhost:8080`
+
+_Note:_ Replace `localhost` with the Raspberry Pi's IP if testing from another machine. Find it with: `hostname -I`
+
+_Note:_ Stop the container: `docker compose -f docker/docker-compose.yaml down`
+
+Open a new terminal and use these `curl` commands to test the states and HTML screens (replace `0.0.0.0` with the Raspberry Pi's IP if testing remotely):
+
+```sh
+# Normal/Idle (Removes borders)
+curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=idle"
+
+# Emotions & Interactions
 curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=listening"
 curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=thinking"
-curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=navigating"
-curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=following"
+curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=talking"
+curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=ready"
+
+# Actions
+curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=grabbing"
+curl -X POST http://0.0.0.0:8080/post_trigger_html_change -d "data=grabbing"
+curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=placing"
+
+# Task "Personal Recognition"
 curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=scanning"
 curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=pointing"
+
+# Task "Navigation and Follow Me"
+curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=navigating"
+curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=following"
+
+# System Alerts
 curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=help"
 curl -X POST http://0.0.0.0:8080/post_trigger_state -d "state=error"
 ```
 
-**Direct HTML Loading:**
+To test **direct HTML loading** (without the borders/state UI):
 ```sh
 # Format: curl -X POST http://0.0.0.0:8080/post_trigger_html_change -d "data={html_file}"
 
@@ -141,42 +246,12 @@ curl -X POST http://0.0.0.0:8080/post_trigger_html_change -d "data=map"
 curl -X POST http://0.0.0.0:8080/post_trigger_html_change -d "data=video"
 ```
 
----
-
-## Sending subtitles:
-
-There are two ways to send subtitles to the display.
-
-### 1. Sending a subtitle file:
-
-*If you're using raspi:*
+To test **subtitles**, you can publish to the ROS2 topics directly inside the container (publishing 3 times to ensure delivery):
 
 ```sh
-curl -F "file=@/path/to/subtitle.txt" http://0.0.0.0:8080/upload
+# Publish text as the human operator (ASR output)
+docker exec miss_idisplay bash -c "source /opt/ros/humble/setup.bash && ros2 topic pub -t 3 /asr_output std_msgs/String \"data: 'Hey Piggy, go to the kitchen'\""
 
-```
-
-*If you're using another machine:*
-
-```sh
-curl -F "file=@/path/to/subtitle.txt" http://{rasp ip}:8080/upload
-
-```
-
-### 2. Sending live text (Miss Piggy or Operator):
-
-You can send text directly to the interface using POST requests. *Note: Ensure you have implemented the corresponding endpoints in your `app.py`.*
-
-**Miss Piggy (Robot):**
-
-```sh
-curl -X POST http://localhost:8080/post_subtitle_robot -d "text=I'm going to the kitchen right now."
-
-```
-
-**Operator (Human):**
-
-```sh
-curl -X POST http://localhost:8080/post_subtitle_human -d "text=Hey Miss Piggy, please go to the kitchen."
-
+# Publish text as the robot speaking (TTS)
+docker exec miss_idisplay bash -c "source /opt/ros/humble/setup.bash && ros2 topic pub -t 3 /text_to_speech std_msgs/String \"data: 'Going to the kitchen now'\""
 ```
