@@ -244,7 +244,7 @@ This HTML file sets up a simple web page that uses Flask-SocketIO to dynamically
                         const lines = currentWords.split('\n');
                         const lastLine = lines[lines.length - 1];
                         const wordCount = lastLine.split(' ').length;
-                        if (wordCount % 10 === 0) {
+                        if (wordCount % 17 === 0) {
                             subtitleDiv.innerHTML = subtitleDiv.innerHTML.trim() + '<br>';
                         }
                         subtitleDiv.innerHTML = subtitleDiv.innerHTML.split('<br>').slice(-2).join('<br>');

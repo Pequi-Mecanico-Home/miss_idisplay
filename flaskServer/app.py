@@ -18,7 +18,6 @@ import urllib.parse
 from flask import Flask, render_template, request, Response
 from flask_socketio import SocketIO
 
-from collections import deque
 import time
 async_mode = 'threading'
 
@@ -39,50 +38,25 @@ def on_text_human(msg):
     except Exception as e:
         print(f"Error posting human text: {e}")
 
-# def on_text_robot(msg):
-#     global concatenated_text
-#     text_data = msg.data
-#     words = text_data.split()
-    
-#     if not hasattr(on_text_robot, 'word_queue'):
-#         on_text_robot.word_queue = deque(maxlen=10)
-    
-#     on_text_robot.word_queue.extend(words)
-    
-#     concatenated_text = ' '.join(on_text_robot.word_queue)
-#     socketio.emit('subtitle_robot', concatenated_text)
-    
 def on_text_robot(msg):
     global concatenated_text
-    print(f"CALLBACK FIRED: {msg.data}", flush=True)
     text_data = msg.data
-    words = text_data.split()
-    
-    if not hasattr(on_text_robot, 'word_queue'):
-        on_text_robot.word_queue = deque(maxlen=8)
-        on_text_robot.last_message_time = time.time()
-    
-    on_text_robot.word_queue.extend(words)
-    on_text_robot.last_message_time = time.time()
-    
-    concatenated_text = ' '.join(on_text_robot.word_queue)
+
+    # ros2 topic pub -t redelivers the same message repeatedly; ignore
+    # immediate repeats so the same sentence isn't re-displayed 3x in a row.
+    now = time.time()
+    if text_data == getattr(on_text_robot, 'last_text', None) and \
+            now - getattr(on_text_robot, 'last_time', 0) < 5:
+        return
+    on_text_robot.last_text = text_data
+    on_text_robot.last_time = now
+
+    concatenated_text = text_data
     try:
         data = urllib.parse.urlencode({'text': concatenated_text}).encode()
         urllib.request.urlopen('http://127.0.0.1:8080/post_subtitle_robot', data=data, timeout=1)
     except Exception as e:
         print(f"Error posting robot text: {e}")
-    
-    # Clear the queue after 3 seconds without messages
-    def clear_queue():
-        while True:
-            if time.time() - on_text_robot.last_message_time > 3:
-                on_text_robot.word_queue.clear()
-            time.sleep(1)
-    
-    if not hasattr(on_text_robot, 'clear_thread'):
-        on_text_robot.clear_thread = Thread(target=clear_queue)
-        on_text_robot.clear_thread.daemon = True
-        on_text_robot.clear_thread.start()
 
 
 
@@ -92,7 +66,7 @@ node_subtitle = rclpy.create_node('Show_subtitle_python')
 
 Thread(target=lambda: rclpy.spin(node_subtitle)).start()  # Starting the Thread with a target in the node
 
-subscription_subtitle_human = node_subtitle.create_subscription(String, "/asr_output", on_text_human, 10)  # Creating the Subscribe node for text messages
+subscription_subtitle_human = node_subtitle.create_subscription(String, "/aBr_output", on_text_human, 10)  # Creating the Subscribe node for text messages
 subscription_subtitle_robot = node_subtitle.create_subscription(String, '/text_to_speech', on_text_robot,10)
 
 
